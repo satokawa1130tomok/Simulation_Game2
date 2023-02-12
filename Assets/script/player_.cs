@@ -20,6 +20,8 @@ public class player_ : MonoBehaviour
     public Slider runslider;
     public int max;
     public int crruent;
+
+    [SerializeField]
     public static float sli_val;
 
     //sli
@@ -29,7 +31,8 @@ public class player_ : MonoBehaviour
     //slider
     [SerializeField]
     public Slider slier_;
-    public int slier_n;
+    public bool run;
+  //  public float slier_n;
 
 
     // Start is called before the first frame update
@@ -39,8 +42,8 @@ public class player_ : MonoBehaviour
         runslider.value = 5;
         runslider.maxValue = 5;
         sli_bk = GetComponent<Image>();
-        sli_bk.color = new Color(255, 255, 255,255);
-        slier_n = 0;
+        sli_bk.color = new Color(255f, 255f, 255f,1f);
+        sli_val = 0f;
     }
     // Update is called once per frame
 
@@ -51,7 +54,6 @@ public class player_ : MonoBehaviour
         {
             camera_();
             Move();
-            Sli();
             slider();
             Ray_();
         }
@@ -68,28 +70,36 @@ public class player_ : MonoBehaviour
     }
     public void  slider()
     {
-        slier_.value = slier_n;
+        slier_.value = sli_val;
+        if (run == false)
+        {
+            sli_val = sli_val + 1f;
+            if (sli_val >= 101)
+            {
+                sli_val = 100;
+            }
+            Debug.Log("abc");
+        }
+        else
+        {
+            sli_val = sli_val - 0.5f;
+            if (sli_val <= 0)
+            {
+                sli_val = 0;
+            }
+            Debug.Log("abcd");
+        }
+        Debug.Log(sli_bk.color);
         if (Input.GetKey(KeyCode.K))
         {
-
+            sli_bk.color = new Color(255f, 255f, 255f);
         }
+
     }
 
 
 
-    public void Sli()
-    {
-
-        //Debug.Log("runslider.sc" + "value:" + runslider.value + "player.Run:" + player_.run_tf);
-
-         runslider.value = sli_val;
-        if (Input.GetKey(KeyCode.K))
-        {
-            sli_bk.color = new Color(255, 0,0, 255);
-        }
-        
-
-    }
+   
 
 
     public void jump()
@@ -129,15 +139,18 @@ public class player_ : MonoBehaviour
 
             if (Run)
             {
-
+                if(sli_val >0)
                 transform.position += transform.right * (speed * 2) * Time.deltaTime;
                 run_tf = true;
+                run = true;
 
             }
             else
             {
                 transform.position += transform.right * speed * Time.deltaTime;
                 run_tf = true;
+                run = false;
+
             }
         }
         if (Input.GetKey(KeyCode.S))
@@ -157,6 +170,10 @@ public class player_ : MonoBehaviour
             }
         }
         myTransform.eulerAngles = worldAngle;
+        if (!Input.GetKey(KeyCode.W))
+        {
+            run = false;
+        }
 
     }
 
