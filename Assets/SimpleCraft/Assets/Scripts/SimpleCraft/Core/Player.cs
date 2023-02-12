@@ -231,11 +231,12 @@ namespace SimpleCraft.Core
 		/// </summary>
 		void CheckPlayerFocus()
 		{
-			_camf = _cam.right;
+			
+			_camf = _cam.forward;
 
-			Debug.DrawRay(_cam.position, _camf, Color.red, 10);
-			Debug.Log(UnityEngine.Physics.Raycast(_cam.position, _cam.forward, out _hit, 10, _focusLayers.value));
-			if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10, _focusLayers.value))
+			Debug.DrawRay(_cam.position, _camf, Color.red, 100);
+			//Debug.Log(UnityEngine.Physics.Raycast(_cam.position, _cam.forward, out _hit, 100, _focusLayers.value));
+			if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10))
 			{
 				Debug.Log("hit check");
 				Debug.DrawRay(_cam.position, _cam.forward,Color.red,5,true);
