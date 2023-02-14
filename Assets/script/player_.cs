@@ -119,7 +119,7 @@ public class player_ : MonoBehaviour
     public void Move()
 
     {
-        if (this.transform.position.y < -50)
+        if (this.transform.position.y < -10)
         {
             this.transform.position = new Vector3(0, 10, 0);
         }
@@ -137,12 +137,13 @@ public class player_ : MonoBehaviour
         {
 
 
-            if (Run)
+            if (Run && sli_val !=0)
             {
-                if(sli_val >0)
-                transform.position += transform.right * (speed * 2) * Time.deltaTime;
-                run_tf = true;
-                run = true;
+                
+                    transform.position += transform.right * (speed * 2) * Time.deltaTime;
+                    run_tf = true;
+                    run = true;
+                
 
             }
             else
