@@ -11,6 +11,8 @@ TagManager:
   - Tool
   - Interactable
   - Terrain
+  - Ground
+  - open
   layers:
   - Default
   - TransparentFX

@@ -110,7 +110,7 @@ namespace SimpleCraft.Core
 			if (Input.GetKeyDown(KeyCode.Escape) && !_inventoryUI.IsActive())
 				ShowPauseMenu();
 
-			if ((Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab)) && !_showingMenu)
+			if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Tab)) && !_showingMenu)
 				_inventoryUI.Toogle();
 
 			if (_showingMenu || _inventoryUI.IsActive())
@@ -188,24 +188,66 @@ namespace SimpleCraft.Core
 			}
 		}
 
+		//public void UseItem()
+		//{
+		//	Debug.Log("0");
+		//	Debug.Log(_interactionObj != null) ;
+		//	//if it is focusing on a interactable
+		//	if (_currItem != "" && _interactionObj != null)
+		//	{
+		//		Debug.Log("1");
+		//		Interactable interactable = _interactionObj.GetComponent<Interactable>();
+
+		//		if (interactable)
+		//			Debug.Log("2");
+		//		//
+		//		if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
+		//			{
+		//			Debug.Log("3");
+		//			//inveを開いている時
+		//			if (_inventoryUI.IsActive())
+		//				Debug.Log("4");
+		//			_inventoryUI.Toogle();
+		//				_quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
+		//				return;
+		//			Debug.Log("5");
+		//		}
+		//	}
+		//	_quickMessage.ShowMessage("Can't use that here!");
+		//	Debug.Log("6");
+		//}
+
 		public void UseItem()
 		{
+			Debug.Log("0");
+			Debug.Log(_interactionObj != null);
 			//if it is focusing on a interactable
 			if (_currItem != "" && _interactionObj != null)
 			{
+				Debug.Log("1");
 				Interactable interactable = _interactionObj.GetComponent<Interactable>();
 
 				if (interactable)
-					if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
+					Debug.Log("2");
+				//
+				if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
+				{
+					Debug.Log("3");
+					//if the inventory is open
+					if (_inventoryUI.IsActive())
 					{
-						if (_inventoryUI.IsActive())
-							_inventoryUI.Toogle();
-						_quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
-						return;
+						Debug.Log("4");
+						_inventoryUI.Toogle();
 					}
+					_quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
+					return;
+					Debug.Log("5");
+				}
 			}
 			_quickMessage.ShowMessage("Can't use that here!");
+			Debug.Log("6");
 		}
+
 
 		public void Equip()
 		{
@@ -269,6 +311,11 @@ namespace SimpleCraft.Core
 				{
 					_actionText.Text = _hit.transform.gameObject.name;
 					_interaction = Interaction.None;
+					_interactionObj = _hit.transform.gameObject;
+				}
+				else if (_hit.transform.gameObject.tag == "open")
+				{
+					_actionText.Text = "op";
 					_interactionObj = _hit.transform.gameObject;
 				}
 				else
@@ -427,6 +474,7 @@ namespace SimpleCraft.Core
 
 			if (_toolHandler.CurrentTool != null)
 			{
+				
 				if (_currItem == _toolHandler.CurrentTool.ItemName && _inventory.Items[_currItem] == 1)
 				{
 					Destroy(_toolHandler.ToolObject);

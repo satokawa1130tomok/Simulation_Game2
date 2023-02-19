@@ -135,7 +135,7 @@ namespace SimpleCraft.UI{
         /// </summary>
 		public void Toogle(){
 			_invScrollView.SetActive (!_invScrollView.activeSelf);
-			_secondInvScrollView.SetActive (!_invScrollView.activeSelf);
+			_secondInvScrollView.SetActive (_invScrollView.activeSelf);
             Cursor.visible = _invScrollView.activeSelf;
             if (_invScrollView.activeSelf){
                 this.DrawInventoryItem(_invScrollView, _inventoryButton, _player.Inventory, ref _but);
