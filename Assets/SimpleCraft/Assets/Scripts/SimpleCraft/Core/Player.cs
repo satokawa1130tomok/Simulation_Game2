@@ -145,6 +145,7 @@ namespace SimpleCraft.Core
 
 			if (_craftingMode)
 				OnCraftingMode();
+
 			else
 			{
 				if (Input.GetMouseButtonDown(0) && _toolHandler.CurrentTool != null)
@@ -188,68 +189,39 @@ namespace SimpleCraft.Core
 			}
 		}
 
-		//public void UseItem()
-		//{
-		//	Debug.Log("0");
-		//	Debug.Log(_interactionObj != null) ;
-		//	//if it is focusing on a interactable
-		//	if (_currItem != "" && _interactionObj != null)
-		//	{
-		//		Debug.Log("1");
-		//		Interactable interactable = _interactionObj.GetComponent<Interactable>();
+        public void UseItem()
+        {
+            Debug.Log("0");
+            Debug.Log(_interactionObj != null);
+            //if it is focusing on a interactable
+            if (_currItem != "" && _interactionObj != null)
+            {
+                Debug.Log("1");
+                Interactable interactable = _interactionObj.GetComponent<Interactable>();
 
-		//		if (interactable)
-		//			Debug.Log("2");
-		//		//
-		//		if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
-		//			{
-		//			Debug.Log("3");
-		//			//inveを開いている時
-		//			if (_inventoryUI.IsActive())
-		//				Debug.Log("4");
-		//			_inventoryUI.Toogle();
-		//				_quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
-		//				return;
-		//			Debug.Log("5");
-		//		}
-		//	}
-		//	_quickMessage.ShowMessage("Can't use that here!");
-		//	Debug.Log("6");
-		//}
-
-		public void UseItem()
-		{
-			Debug.Log("0");
-			Debug.Log(_interactionObj != null);
-			//if it is focusing on a interactable
-			if (_currItem != "" && _interactionObj != null)
-			{
-				Debug.Log("1");
-				Interactable interactable = _interactionObj.GetComponent<Interactable>();
-
-				if (interactable)
-					Debug.Log("2");
-				//
-				if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
-				{
-					Debug.Log("3");
-					//if the inventory is open
-					if (_inventoryUI.IsActive())
-					{
-						Debug.Log("4");
-						_inventoryUI.Toogle();
-					}
-					_quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
-					return;
-					Debug.Log("5");
-				}
-			}
-			_quickMessage.ShowMessage("Can't use that here!");
-			Debug.Log("6");
-		}
+                if (interactable)
+                    Debug.Log("2");
+                //
+                if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
+                {
+                    Debug.Log("3");
+                    //inveを開いている時
+                    if (_inventoryUI.IsActive())
+                        Debug.Log("4");
+                    _inventoryUI.Toogle();
+                    _quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
+                    return;
+                    Debug.Log("5");
+                }
+            }
+            _quickMessage.ShowMessage("Can't use that here!");
+            Debug.Log("6");
+        }
 
 
-		public void Equip()
+
+
+        public void Equip()
 		{
 			if (_currItem == "")
 				return;
