@@ -148,12 +148,14 @@ namespace SimpleCraft.Core
 
 			else
 			{
+			
 				if (Input.GetMouseButtonDown(0) && _toolHandler.CurrentTool != null)
 					_toolHandler.Attack();
-
+				
 				//Perform some action when E is pressed
 				if (Input.GetMouseButtonDown(0) && _interactionObj != null)
 				{
+					
 					if (_interaction == Interaction.GrabTool)
 					{
 						Tool tool = _interactionObj.GetComponent<Tool>();
@@ -264,6 +266,7 @@ namespace SimpleCraft.Core
 				}
 				else if (_hit.transform.gameObject.tag == "Tool")
 				{
+					Debug.Log("tool");
 					_actionText.Text = "Press (E) to grab " + _hit.transform.gameObject.GetComponent<Tool>().ItemName;
 					_interaction = Interaction.GrabTool;
 					_interactionObj = _hit.transform.gameObject;

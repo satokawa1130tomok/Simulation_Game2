@@ -59,26 +59,30 @@ namespace SimpleCraft.Core{
 		}
 
 		void OnTriggerEnter (Collider collider){
+			Debug.Log("1");
 			if (_OnAttack)
 				if (collider.gameObject.tag == "Resource") {
+					Debug.Log("2");
 					Resource resource = collider.gameObject.GetComponent<Resource> ();
 
 					if (resource != null) {
 						_OnAttack = false;
-
+						Debug.Log("3");
 						float gatherPower = _currentTool.GatherPower;
 
 					    if (_currentTool.GatherFactor (resource.Item.ItemName) != -1)
 						    gatherPower = gatherPower * _currentTool.GatherFactor (resource.Item.ItemName);
-
-                        float amountGathered = resource.Gather(gatherPower);
+						Debug.Log("4");
+						float amountGathered = resource.Gather(gatherPower);
                         float amount = _player.Inventory.Add(resource.Item.ItemName, amountGathered, _player);
 
                         if (amount > 0)
                             _player.QuickMessage.ShowMessage("Gathered "+ amount + " " + resource.Item.ItemName);
+						Debug.Log("5");
 
-                        if (amount < amountGathered)
+						if (amount < amountGathered)
 						    Manager.InstantiateItem (resource.Item.ItemName,this.transform.position,  amountGathered - amount);
+						Debug.Log("6");
 					}
 				}
 		}
