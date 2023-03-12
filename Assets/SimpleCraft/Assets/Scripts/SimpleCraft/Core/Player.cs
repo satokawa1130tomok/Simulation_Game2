@@ -255,6 +255,7 @@ namespace SimpleCraft.Core
 			if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10))
 			{
 				Debug.Log("hit check");
+				Debug.Log(_hit.transform.gameObject.tag == "Tool");
 				Debug.DrawRay(_cam.position, _cam.forward,Color.red,5,true);
 				if (_hit.transform.gameObject.tag == "Item")
 				{
