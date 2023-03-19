@@ -91,6 +91,7 @@ namespace SimpleCraft.Core{
         /// <param name="amount"></param>
         /// <param name="player"></param>
         /// <returns></returns>
+        ///
 		public float Add(string name, float amount,Player player = null){
             //When the inventory has limited capacity
             if (_maxWeight != 0.0f){

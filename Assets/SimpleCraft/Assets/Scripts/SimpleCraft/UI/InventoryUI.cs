@@ -85,31 +85,30 @@ namespace SimpleCraft.UI{
         /// <param name="inventory"></param>
         /// <param name="but"></param>
 		void DrawInventoryItem (GameObject inventoryScrollView,
-			Button inventoryButton,
-			Inventory inventory,
-			ref Button[] but){
+			
+			Button inventoryButton,//インベントリを開くためのボタンオブジェクト
+			Inventory inventory,//プレイヤーのインベントリ
+			ref Button[] but){//インベントリ内の各アイテムに対するボタンの配列
 
-			RectTransform Content;
-			inventoryScrollView.SetActive(true);
-			Inventory.Type buttonType = inventory.ButtonType;
-			Content = _invScrollView.GetComponent<ScrollRect> ().content; 
+			RectTransform Content;//ContentはScrollViewのコンテンツのRectTransformを参照する変数
+     		inventoryScrollView.SetActive(true);//inventoryScrollViewを表示
+			Inventory.Type buttonType = inventory.ButtonType;//倉庫かインベントリかの判定
+			Content = _invScrollView.GetComponent<ScrollRect> ().content;//ScrollRectをcontentにする
+			inventoryButton.gameObject.SetActive(true);//inventoryButton.gameObjectを表示
 
-			inventoryButton.gameObject.SetActive(true);
+			Cursor.visible = true;//カーソルを表示
+			Time.timeScale = 0;//時間を止める
+			DestroyButtons (but);//ボタンをリセット
+			but = new Button[inventory.Items.Count];//アイテムの数配列を作る
+			int i = 0;//配列の変数
+			foreach (string name in inventory.Items.Keys) {//配列の数繰り返す
+				but[i] = Instantiate (inventoryButton) as Button;//クローンを作る。ボタンにする
 
-			Cursor.visible = true;
-			Time.timeScale = 0;
-			DestroyButtons (but);
-			but = new Button[inventory.Items.Count];
-			int i = 0;
-			foreach (string name in inventory.Items.Keys) {
-				but[i] = Instantiate (inventoryButton) as Button;
+				but[i].image.rectTransform.sizeDelta = new Vector2 (160, 30);//画像のキャンバス内の大きさを入れる
+				but[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30)); //前のボタンの下にボタンを配置します
+                but[i].transform.localScale = new Vector3 (1,1,1);//自分を中心に大きくする
 
-				but[i].image.rectTransform.sizeDelta = new Vector2 (160, 30);
-                //position the button bellow the previous
-                but[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30));
-                but[i].transform.localScale = new Vector3 (1,1,1);
-
-				but[i].GetComponentInChildren <Text> ().text = name;
+				but[i].GetComponentInChildren <Text> ().text = name;//ボタンのテキストをnameの値に設定する
 
 				if (inventory.Items [name] > 1)
 					but [i].GetComponentInChildren <Text> ().text += "(" + inventory.Items [name] + ")";
