@@ -41,11 +41,14 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <param name="inventory"></param>
 		public void Draw(Inventory inventory){
+			Debug.Log("Draw");
 			if (inventory.ButtonType == Inventory.Type.Inventory) {
+				Debug.Log("dr1");
 				DrawInventoryItem (_invScrollView, _inventoryButton, inventory, ref _but);
 				_inventoryWeight.text = "Weight: "+inventory.Weight + "/" + inventory.MaxWeight;
 			}else
 				DrawInventoryItem (_secondInvScrollView,_secondInvButton,inventory, ref _secondBut);
+			Debug.Log("dr2");
 		}
 
 
@@ -54,6 +57,7 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <param name="item"></param>
 		public void SelectItem(Item item){
+			Debug.Log("SelectItem");
 			_itemNameText.text = item.ItemName;
 			_descriptionText.text = item.Description;
 
@@ -67,6 +71,7 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <returns></returns>
 		public float GetAmount(){
+			Debug.Log("GetAmount");
 			float amount = 1;
 
 			if(_inputAmount.text != "")
@@ -75,20 +80,22 @@ namespace SimpleCraft.UI{
 			return amount;
 		}
 
-        /// <summary>
-        /// Instantiate a button for each item, positioning one
-        /// bellow the other and setting scrollview size according
-        /// to the items
-        /// </summary>
-        /// <param name="inventoryScrollView"></param>
-        /// <param name="inventoryButton"></param>
-        /// <param name="inventory"></param>
-        /// <param name="but"></param>
-		void DrawInventoryItem (GameObject inventoryScrollView,
-			
+		/// <summary>
+		/// Instantiate a button for each item, positioning one
+		/// bellow the other and setting scrollview size according
+		/// to the items
+		/// </summary>
+		/// <param name="inventoryScrollView"></param>
+		/// <param name="inventoryButton"></param>
+		/// <param name="inventory"></param>
+		/// <param name="but"></param>
+		void DrawInventoryItem(GameObject inventoryScrollView,
+
 			Button inventoryButton,//インベントリを開くためのボタンオブジェクト
 			Inventory inventory,//プレイヤーのインベントリ
 			ref Button[] but){//インベントリ内の各アイテムに対するボタンの配列
+
+			Debug.Log("DrawInventoryItem");
 
 			RectTransform Content;//ContentはScrollViewのコンテンツのRectTransformを参照する変数
      		inventoryScrollView.SetActive(true);//inventoryScrollViewを表示
@@ -133,6 +140,7 @@ namespace SimpleCraft.UI{
         /// Show/hide imvemtory
         /// </summary>
 		public void Toogle(){
+			Debug.Log("toogle");
 			_invScrollView.SetActive (!_invScrollView.activeSelf);
 			_secondInvScrollView.SetActive (_invScrollView.activeSelf);
             Cursor.visible = _invScrollView.activeSelf;
@@ -145,10 +153,12 @@ namespace SimpleCraft.UI{
         }
 
         public bool IsActive(){
+			Debug.Log("isactive");
             return _invScrollView.activeSelf;
         }
 
         void DestroyButtons(Button[] but){
+			Debug.Log("destroybuttns");
 			if (but != null) {
 				for (int i = 0; i < but.Length; i++) {
 					Destroy (but [i].gameObject);

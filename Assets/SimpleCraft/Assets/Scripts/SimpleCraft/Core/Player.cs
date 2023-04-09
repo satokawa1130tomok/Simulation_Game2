@@ -27,7 +27,7 @@ namespace SimpleCraft.Core
 		private Transform _raycaster;
 		[SerializeField]
 		private ToolHandler _toolHandler;
-
+		public static bool __hit = false;
 		private LayerMask _focusLayers;
 		private LayerMask _craftLayers;
 		private GameObject _itemObj;
@@ -107,6 +107,9 @@ namespace SimpleCraft.Core
 
 		void Update()
 		{
+			Debug.Log(_hit);
+			//インタラクション
+			//Debug.Log();
 			if (Input.GetKeyDown(KeyCode.Escape) && !_inventoryUI.IsActive())
 				ShowPauseMenu();
 
@@ -142,22 +145,47 @@ namespace SimpleCraft.Core
 					_currItem = "";
 				}
 			}
-
+			Debug.Log(("_hit") + (__hit));
+			//Debug.Log(_craftingMode);
 			if (_craftingMode)
+			{
 				OnCraftingMode();
-
+			}
 			else
 			{
-			
+				//Debug.Log("a");
 				if (Input.GetMouseButtonDown(0) && _toolHandler.CurrentTool != null)
 					_toolHandler.Attack();
-				
+
 				//Perform some action when E is pressed
+				//Debug.Log(_interactionObj);
 				if (Input.GetMouseButtonDown(0) && _interactionObj != null)
 				{
-					
-					if (_interaction == Interaction.GrabTool)
+
+					//Debug.Log("1  " + (_hit.transform.gameObject.tag == "Resource") + (_hit.transform.gameObject.tag) + "2  " + (_interaction == Interaction.GrabTool));
+					//持つやtu
+
+					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource")
 					{
+						//Debug.Log("itme re");
+						Resource resource_ = _hit.transform.gameObject.GetComponent<Resource>();
+						Item item = _interactionObj.GetComponent<Item>();
+						__hit = true;
+						float amountTaken = _inventory.Add(resource_.name, resource_.Amount, this);
+						//Debug.Log(amountTaken);
+
+						if (amountTaken == item.Amount)
+							Destroy(_interactionObj);
+						else
+							item.Amount -= amountTaken;
+						resource_.Item = GetComponent<Item>();
+					    Item Itemobj = resource_.Item;
+						string itemname = Itemobj.ItemName;
+						Equip(itemname,resource_.Amount);
+					}
+					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Tool")
+					{
+						Debug.Log("to");
 						Tool tool = _interactionObj.GetComponent<Tool>();
 						_inventory.Add(tool.ItemName, tool.Amount, this);
 						if (_toolHandler.CurrentTool == null)
@@ -166,7 +194,7 @@ namespace SimpleCraft.Core
 							Destroy(_interactionObj);
 						_interactionObj = null;
 					}
-					else if (_interaction == Interaction.GrabItem)
+					else if (_interaction == Interaction.GrabItem && _hit.transform.gameObject.tag == "Item")
 					{
 						Item item = _interactionObj.GetComponent<Item>();
 						float amountTaken = _inventory.Add(item.ItemName, item.Amount, this);
@@ -176,6 +204,7 @@ namespace SimpleCraft.Core
 						else
 							item.Amount -= amountTaken;
 					}
+
 					else if (_interaction == Interaction.OpenContainer)
 					{
 						//get the container inventory
@@ -193,37 +222,54 @@ namespace SimpleCraft.Core
 
         public void UseItem()
         {
-            Debug.Log("0");
+           // Debug.Log("0");
             Debug.Log(_interactionObj != null);
             //if it is focusing on a interactable
             if (_currItem != "" && _interactionObj != null)
             {
-                Debug.Log("1");
+               // Debug.Log("1");
                 Interactable interactable = _interactionObj.GetComponent<Interactable>();
 
                 if (interactable)
-                    Debug.Log("2");
+                   // Debug.Log("2");
                 //
                 if (_interactionObj.GetComponent<Interactable>().UseItem(_currItem))
                 {
-                    Debug.Log("3");
+                   // Debug.Log("3");
                     //inveを開いている時
                     if (_inventoryUI.IsActive())
-                        Debug.Log("4");
+                        //Debug.Log("4");
                     _inventoryUI.Toogle();
                     _quickMessage.ShowMessage(_interactionObj.GetComponent<Interactable>().SuccessMessage);
                     return;
-                    Debug.Log("5");
+                   // Debug.Log("5");
                 }
             }
             _quickMessage.ShowMessage("Can't use that here!");
-            Debug.Log("6");
-        }
+			// Debug.Log("6");
+		}
+		public void Equip(string name_,float amount_)
+		{
+			if (_currItem == "")
+				return;
+
+			GameObject tool = Manager.getItem(name_,amount_);
+
+			if (tool.GetComponent<Item>().GetType() == typeof(Tool))
+			{
+				_toolHandler.ChangeTool(tool);
+			}
+			else
+			{
+				Destroy(tool);
+				_quickMessage.ShowMessage("Can't equip this item!");
+			}
+		}
 
 
 
 
-        public void Equip()
+		public void Equip()
 		{
 			if (_currItem == "")
 				return;
@@ -254,12 +300,12 @@ namespace SimpleCraft.Core
 			//Debug.Log(UnityEngine.Physics.Raycast(_cam.position, _cam.forward, out _hit, 100, _focusLayers.value));
 			if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10))
 			{
-				Debug.Log("hit check");
-				Debug.Log(_hit.transform.gameObject.tag == "Tool");
+				//Debug.Log("hit check");
+				//Debug.Log(_hit.transform.gameObject.tag == "Tool");
 				Debug.DrawRay(_cam.position, _cam.forward,Color.red,5,true);
 				if (_hit.transform.gameObject.tag == "Item")
 				{
-					Debug.Log("item");
+					//Debug.Log("item");
 					Item item = _hit.transform.gameObject.GetComponent<Item>();
 					_actionText.Text = "Press (E) to grab " + item.ItemName + " x " + item.Amount;
 					_interaction = Interaction.GrabItem;
@@ -267,15 +313,19 @@ namespace SimpleCraft.Core
 				}
 				else if (_hit.transform.gameObject.tag == "Tool")
 				{
-					Debug.Log("tool");
+					
 					_actionText.Text = "Press (E) to grab " + _hit.transform.gameObject.GetComponent<Tool>().ItemName;
 					_interaction = Interaction.GrabTool;
 					_interactionObj = _hit.transform.gameObject;
 				}
 				else if (_hit.transform.gameObject.tag == "Resource")
 				{
+					//Debug.Log("re");
 					Resource resource = _hit.transform.gameObject.GetComponent<Resource>();
 					_actionText.Text = "Resource: " + resource.Item.ItemName;
+					_interactionObj = _hit.transform.gameObject;
+					//Debug.Log("_ac ;  " +_actionText);
+					//Debug.Log("re  ;  " + resource);
 				}
 				else if (_hit.transform.gameObject.tag == "Container")
 				{

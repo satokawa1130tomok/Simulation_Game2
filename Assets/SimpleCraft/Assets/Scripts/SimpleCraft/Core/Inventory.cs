@@ -92,12 +92,39 @@ namespace SimpleCraft.Core{
         /// <param name="player"></param>
         /// <returns></returns>
         ///
+       
 		public float Add(string name, float amount,Player player = null){
+           
+            if (Player.__hit)
+            {
+               
+                Item item = Manager.GetInventoryItem(name);
+                
+                //Debug.Log("amount:" + amount + "   (float)Math.Floor((_maxWeight - _weight) / item.Weight): "+ (float)Math.Floor((_maxWeight - _weight) / item.Weight));
+                //amount = (float)Math.Floor((_maxWeight - _weight) / item.Weight);
+                
+                if (player != null)
+                {
+                    player.QuickMessage.ShowMessage("Inventory is full!");
+                }
+
+                // _weight += item.Weight * amount;
+
+                Player.__hit = false;
+            }
+
             //When the inventory has limited capacity
             if (_maxWeight != 0.0f){
+               
                 Item item = Manager.GetInventoryItem(name);
-                if (item.Weight != 0){
-                    if ((item.Weight * amount + _weight) > _maxWeight){
+                if (item.Weight != 0 || Player.__hit){
+            
+                   
+                   
+                    if ((item.Weight * amount + _weight) > _maxWeight || Player.__hit){
+                        
+                        
+                        Player.__hit = false;
                         amount = (float)Math.Floor((_maxWeight - _weight) / item.Weight);
 						if(player != null)
                         	player.QuickMessage.ShowMessage("Inventory is full!");
@@ -116,7 +143,7 @@ namespace SimpleCraft.Core{
 
             if (Items[name] == 0)
                 Items.Remove(name);
-
+            Debug.Log("0");
             return amount;
         }
 

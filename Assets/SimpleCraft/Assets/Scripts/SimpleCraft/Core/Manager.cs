@@ -54,17 +54,20 @@ namespace SimpleCraft.Core{
         /// <param name="name"></param>
         /// <returns></returns>
 		public static Item GetInventoryItem(string name){
+          
             GameObject g;
             try{
                 g = Instantiate(Resources.Load("Items/" + name, typeof(GameObject))) as GameObject;
+               
             }
             catch (System.Exception){
+               
                 Debug.Log("Invalid item! Every item must be placed on the SimpleCraft/Assets/Resources/Items/ folder!");
                 Debug.Log("Certify that the item's name and Prefab's name are the same!");
                 throw;
             }
             
-			Item item = g.GetComponent<Item> ();
+            Item item = g.GetComponent<Item> ();
 			Destroy (g);
 			return item;
 		}

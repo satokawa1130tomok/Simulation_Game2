@@ -78,7 +78,7 @@ public class player_ : MonoBehaviour
             {
                 sli_val = 100;
             }
-            Debug.Log("abc");
+            //Debug.Log("abc");
         }
         else
         {
