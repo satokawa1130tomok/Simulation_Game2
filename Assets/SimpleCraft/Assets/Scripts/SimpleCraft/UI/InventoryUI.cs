@@ -17,7 +17,7 @@ namespace SimpleCraft.UI{
         //Used when accessing anoyher inventory
 		[SerializeField] private  GameObject _secondInvScrollView;
 
-		[SerializeField] private  Button _inventoryButton;
+		[SerializeField] public  Button _inventoryButton;
 		[SerializeField] private  Button _secondInvButton;
 		[SerializeField] private  InputField _inputAmount;
 
@@ -27,9 +27,9 @@ namespace SimpleCraft.UI{
 		[SerializeField] private  Text _inventoryWeight;
 
 		Player _player;
-		Button[] _but;
+		public  Button[]  _but;
+       
 		Button[] _secondBut;
-
 		void Start(){
 			_player = this.GetComponent<Player> ();
 			_invScrollView.SetActive (false);
@@ -41,14 +41,14 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <param name="inventory"></param>
 		public void Draw(Inventory inventory){
-			Debug.Log("Draw");
+		//	Debug.Log("Draw");
 			if (inventory.ButtonType == Inventory.Type.Inventory) {
-				Debug.Log("dr1");
+			//	Debug.Log("dr1");
 				DrawInventoryItem (_invScrollView, _inventoryButton, inventory, ref _but);
 				_inventoryWeight.text = "Weight: "+inventory.Weight + "/" + inventory.MaxWeight;
 			}else
 				DrawInventoryItem (_secondInvScrollView,_secondInvButton,inventory, ref _secondBut);
-			Debug.Log("dr2");
+			//Debug.Log("dr2");
 		}
 
 
@@ -57,7 +57,7 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <param name="item"></param>
 		public void SelectItem(Item item){
-			Debug.Log("SelectItem");
+		//	Debug.Log("SelectItem");
 			_itemNameText.text = item.ItemName;
 			_descriptionText.text = item.Description;
 
@@ -71,7 +71,7 @@ namespace SimpleCraft.UI{
         /// </summary>
         /// <returns></returns>
 		public float GetAmount(){
-			Debug.Log("GetAmount");
+			//Debug.Log("GetAmount");
 			float amount = 1;
 
 			if(_inputAmount.text != "")
@@ -79,68 +79,131 @@ namespace SimpleCraft.UI{
 
 			return amount;
 		}
+        private void Update()
+        {
+            
+        }
+        /// <summary>
+        /// Instantiate a button for each item, positioning one
+        /// bellow the other and setting scrollview size according
+        /// to the items
+        /// </summary>
+        /// <param name="inventoryScrollView"></param>
+        /// <param name="inventoryButton"></param>
+        /// <param name="inventory"></param>
+        /// <param name="but"></param>
+        //       public	void DrawInventoryItem(GameObject inventoryScrollView,
+        //Button inventoryOpenButton,
+        //Inventory playerInventory,
+        //ref Button[] itemButtons)
+        //	{
+        //		//Debug.Log("DrawInventoryItem");
 
-		/// <summary>
-		/// Instantiate a button for each item, positioning one
-		/// bellow the other and setting scrollview size according
-		/// to the items
-		/// </summary>
-		/// <param name="inventoryScrollView"></param>
-		/// <param name="inventoryButton"></param>
-		/// <param name="inventory"></param>
-		/// <param name="but"></param>
-		void DrawInventoryItem(GameObject inventoryScrollView,
+        //		RectTransform contentRectTransform;
+        //		inventoryScrollView.SetActive(true);
 
-			Button inventoryButton,//インベントリを開くためのボタンオブジェクト
-			Inventory inventory,//プレイヤーのインベントリ
-			ref Button[] but){//インベントリ内の各アイテムに対するボタンの配列
+        //		Inventory.Type buttonType = playerInventory.ButtonType;
+        //		contentRectTransform = inventoryScrollView.GetComponent<ScrollRect>().content;
 
-			Debug.Log("DrawInventoryItem");
+        //		inventoryOpenButton.gameObject.SetActive(true);
+        //		Cursor.visible = true;
+        //		Time.timeScale = 0;
 
-			RectTransform Content;//ContentはScrollViewのコンテンツのRectTransformを参照する変数
-     		inventoryScrollView.SetActive(true);//inventoryScrollViewを表示
-			Inventory.Type buttonType = inventory.ButtonType;//倉庫かインベントリかの判定
-			Content = _invScrollView.GetComponent<ScrollRect> ().content;//ScrollRectをcontentにする
-			inventoryButton.gameObject.SetActive(true);//inventoryButton.gameObjectを表示
+        //		DestroyButtons(itemButtons);
+        //		itemButtons = new Button[playerInventory.Items.Count];
 
-			Cursor.visible = true;//カーソルを表示
-			Time.timeScale = 0;//時間を止める
-			DestroyButtons (but);//ボタンをリセット
-			but = new Button[inventory.Items.Count];//アイテムの数配列を作る
-			int i = 0;//配列の変数
-			foreach (string name in inventory.Items.Keys) {//配列の数繰り返す
-				but[i] = Instantiate (inventoryButton) as Button;//クローンを作る。ボタンにする
+        //		int i = 0;
+        //		foreach (string itemName in playerInventory.Items.Keys)
+        //		{
+        //			itemButtons[i] = Instantiate(inventoryOpenButton) as Button;
+        //			itemButtons[i].image.rectTransform.sizeDelta = new Vector2(160, 30);
+        //			itemButtons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30));
+        //			itemButtons[i].transform.localScale = new Vector3(1, 1, 1);
 
-				but[i].image.rectTransform.sizeDelta = new Vector2 (160, 30);//画像のキャンバス内の大きさを入れる
-				but[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30)); //前のボタンの下にボタンを配置します
-                but[i].transform.localScale = new Vector3 (1,1,1);//自分を中心に大きくする
+        //			itemButtons[i].GetComponentInChildren<Text>().text = itemName;
 
-				but[i].GetComponentInChildren <Text> ().text = name;//ボタンのテキストをnameの値に設定する
+        //			if (playerInventory.Items[itemName] > 1)
+        //				itemButtons[i].GetComponentInChildren<Text>().text += "(" + playerInventory.Items[itemName] + ")";
 
-				if (inventory.Items [name] > 1)
-					but [i].GetComponentInChildren <Text> ().text += "(" + inventory.Items [name] + ")";
+        //			itemButtons[i].transform.SetParent(inventoryOpenButton.transform.parent, false);
+        //			itemButtons[i].enabled = true;
 
-				but[i].transform.SetParent (inventoryButton.transform.parent, false);
-				but[i].enabled = true;
+        //			ItemButton itemButtonComponent = itemButtons[i].gameObject.GetComponent<ItemButton>();
+        //			itemButtonComponent.Player = this.gameObject.GetComponent<Player>();
+        //			itemButtonComponent.Name = itemName;
+        //			itemButtonComponent.InventoryType = buttonType;
 
-				ItemButton itemButton = but [i].gameObject.GetComponent<ItemButton> ();
+        //			i++;
+        //		}
 
-				itemButton.Player = this.gameObject.GetComponent<Player>();
-				itemButton.Name = name;
-				itemButton.InventoryType = buttonType;
+        //		contentRectTransform.sizeDelta = new Vector2(0, (playerInventory.Items.Count + 1) * 30);
+        //		inventoryOpenButton.gameObject.SetActive(false);
+        //	}
 
-				i++;
-			}
+        void DrawInventoryItem(GameObject inventoryScrollView,
 
-            Content.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, (inventory.Items.Count+1)*30);
-			inventoryButton.gameObject.SetActive(false);
-		}
+            Button inventoryButton,//インベントリを開くためのボタンオブジェクト
+            Inventory inventory,//プレイヤーのインベントリ
+            ref Button[] but)
+        {//インベントリ内の各アイテムに対するボタンの配列
+
+            //Debug.Log("DrawInventoryItem");
+
+            RectTransform Content;//ContentはScrollViewのコンテンツのRectTransformを参照する変数
+            inventoryScrollView.SetActive(true);//inventoryScrollViewを表示
+            Inventory.Type buttonType = inventory.ButtonType;//倉庫かインベントリかの判定
+            Content = _invScrollView.GetComponent<ScrollRect>().content;//ScrollRectをcontentにする
+            inventoryButton.gameObject.SetActive(true);//inventoryButton.gameObjectを表示
+
+            Cursor.visible = true;//カーソルを表示
+            Time.timeScale = 0;//時間を止める
+            DestroyButtons(but);//ボタンをリセット
+            but = new Button[inventory.Items.Count];//アイテムの数配列を作る
+            int i = 0;//配列の変数
+                      //Debug.Log(but[1]);
+            
+
+
+
+
+
+            foreach (string name in inventory.Items.Keys)
+            {//配列の数繰り返す
+                but[i] = Instantiate(inventoryButton) as Button;//クローンを作る。ボタンにする
+
+                but[i].image.rectTransform.sizeDelta = new Vector2(160, 30);//画像のキャンバス内の大きさを入れる
+                but[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30)); //前のボタンの下にボタンを配置します
+                but[i].transform.localScale = new Vector3(1, 1, 1);//自分を中心に大きくする
+
+                but[i].GetComponentInChildren<Text>().text = name;//ボタンのテキストをnameの値に設定する
+
+                if (inventory.Items[name] > 1)
+                    but[i].GetComponentInChildren<Text>().text += "(" + inventory.Items[name] + ")";
+                //Debug.Log("inveUI"+inventory.Items[name]); ;
+                but[i].transform.SetParent(inventoryButton.transform.parent, false);
+                but[i].enabled = true;
+
+                ItemButton itemButton = but[i].gameObject.GetComponent<ItemButton>();
+
+                itemButton.Player = this.gameObject.GetComponent<Player>();
+                itemButton.Name = name;
+                itemButton.InventoryType = buttonType;
+
+                i++;
+            }
+            
+
+
+            Content.GetComponent<RectTransform>().sizeDelta = new Vector2(0, (inventory.Items.Count + 1) * 30);
+            inventoryButton.gameObject.SetActive(false);
+
+        }
 
         /// <summary>
         /// Show/hide imvemtory
         /// </summary>
-		public void Toogle(){
-			Debug.Log("toogle");
+        public void Toogle(){
+			//Debug.Log("toogle");
 			_invScrollView.SetActive (!_invScrollView.activeSelf);
 			_secondInvScrollView.SetActive (_invScrollView.activeSelf);
             Cursor.visible = _invScrollView.activeSelf;
@@ -153,12 +216,12 @@ namespace SimpleCraft.UI{
         }
 
         public bool IsActive(){
-			Debug.Log("isactive");
+			//Debug.Log("isactive");
             return _invScrollView.activeSelf;
         }
 
         void DestroyButtons(Button[] but){
-			Debug.Log("destroybuttns");
+			//Debug.Log("destroybuttns");
 			if (but != null) {
 				for (int i = 0; i < but.Length; i++) {
 					Destroy (but [i].gameObject);

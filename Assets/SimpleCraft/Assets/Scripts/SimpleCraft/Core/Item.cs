@@ -11,7 +11,7 @@ namespace SimpleCraft.Core{
 	public class Item : MonoBehaviour {
 
         [SerializeField]
-        private string _itemName;
+        public string _itemName;
         public string ItemName{
             get { return _itemName; }
             set { _itemName = value; }

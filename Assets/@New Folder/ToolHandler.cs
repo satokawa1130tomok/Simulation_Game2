@@ -41,6 +41,7 @@ namespace SimpleCraft.Core{
 		}
 
 		public void ChangeTool (GameObject newTool){
+			
 			if (_toolObject != null)
 				_toolObject.SetActive (false);
 			

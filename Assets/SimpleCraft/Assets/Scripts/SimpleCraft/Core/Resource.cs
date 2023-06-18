@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SimpleCraft.Core{
-    /// <summary>
-    /// A resource has items can be gathered by a player
-    /// Author: Raul Souza
-    /// </summary>
-    public class Resource : MonoBehaviour{
+	/// <summary>
+	/// A resource has items can be gathered by a player
+	/// Author: Raul Souza
+	/// </summary>
+	public class Resource : MonoBehaviour {
 
-        [SerializeField] private GameObject _item;
+		[SerializeField] public GameObject _item;
 
-        private Item _ItemScript { get; set; }
+		private Item _ItemScript { get; set; }
 		public Item Item {
 			get { return _ItemScript; }
 			set { _ItemScript = value; }
 		}
 
 		[SerializeField] private float _amount;
-		public float Amount {
+		public float Amount
+		{
 			get { return _amount; }
 			set { _amount = value; }
 		}
+	
+	    
+		
+
+
 
 		void Start(){
 			_ItemScript = _item.GetComponent<Item>();

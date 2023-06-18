@@ -33,7 +33,8 @@ namespace SimpleCraft.Physics{
                         transform.position.y + collider.center.y,
                         transform.position.z + collider.center.z);
 
-                colliders = UnityEngine.Physics.OverlapBox(position, extents, transform.localRotation);
+               // colliders = UnityEngine
+                  //  .OverlapBox(position, extents, transform.localRotation);
 
             }else if (col.GetType() == typeof(CapsuleCollider)){
                 CapsuleCollider collider = (CapsuleCollider)col;

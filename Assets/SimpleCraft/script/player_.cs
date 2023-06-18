@@ -42,7 +42,7 @@ public class player_ : MonoBehaviour
         runslider.value = 5;
         runslider.maxValue = 5;
         sli_bk = GetComponent<Image>();
-        sli_bk.color = new Color(255f, 255f, 255f,1f);
+      //  sli_bk.color = new Color(255f, 255f, 255f,1f);
         sli_val = 0f;
     }
     // Update is called once per frame
@@ -59,7 +59,7 @@ public class player_ : MonoBehaviour
         }
 
 
-        jump();
+        //jump();
 
         UnityEditor.EditorApplication.isPaused = false;
 

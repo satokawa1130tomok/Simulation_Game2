@@ -143,7 +143,7 @@ namespace SimpleCraft.Core{
 
             if (Items[name] == 0)
                 Items.Remove(name);
-            Debug.Log("0");
+           // Debug.Log("0");
             return amount;
         }
 

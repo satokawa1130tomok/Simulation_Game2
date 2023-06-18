@@ -67,8 +67,8 @@ namespace SimpleCraft.Core{
 			foreach (CraftCost it in _craftCost) {
 				Item item = it.item.GetComponent<Item> ();
 				Cost cost;
-                if (item == null)
-                    Debug.Log(it.item.name +" in "+ this.ItemName + " cost is not a valid item!");
+                if (item == null) { }
+                   // Debug.Log(it.item.name +" in "+ this.ItemName + " cost is not a valid item!");
                 else{
                     cost.item = item.ItemName;
                     cost.amount = it.amount;
@@ -80,16 +80,17 @@ namespace SimpleCraft.Core{
 		}
 
         void Start(){
-            if (this.gameObject.layer != LayerMask.NameToLayer("CraftableItem"))
-                Debug.Log(this.ItemName + " Craftable Items should be on the CraftableItem's layer!");
+            if (this.gameObject.layer != LayerMask.NameToLayer("CraftableItem")) { }
+                //Debug.Log(this.ItemName + " Craftable Items should be on the CraftableItem's layer!");
         }
 
 		/// <summary>
 		/// Check if there is any obstruction
 		/// </summary>
 		/// <returns><c>true</c> if this instance can build; otherwise, <c>false</c>.</returns>
-		public bool CanBuild(){
-            return SimplePhysics.CanPlaceItem(DetectionCollider);
-		}
+		//public bool CanBuild(){
+  //          return Simple
+		//		.CanPlaceItem(DetectionCollider);
+		//}
     }
 }

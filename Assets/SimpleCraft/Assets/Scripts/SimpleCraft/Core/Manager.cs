@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using SimpleCraft.Physics;
+using SimpleCraft;
+    
+    
 
 namespace SimpleCraft.Core{
     /// <summary>
@@ -99,35 +101,39 @@ namespace SimpleCraft.Core{
         /// <param name="pos"></param>
         /// <param name="amount"></param>
 		public static bool InstantiateItem(string name,Vector3 pos,float amount){
-			GameObject g;
-
-			int x = UnityEngine.Random.Range (-1,1);
-			int y = UnityEngine.Random.Range (-1,1);
-
-            //Try to instantiate the item at a random nearby position
-            try{
-                g = Instantiate(Resources.Load("Items/" + name, typeof(GameObject)),
-                new Vector3(pos.x + x, pos.y + y, pos.z + 1), Quaternion.identity) as GameObject;
-            }
-            catch (System.Exception){
-                Debug.Log("Invalid item! Every item must be placed on the SimpleCraft/Items/ folder!");
-                throw;
-            }
-            Collider col = g.GetComponent<Collider>();
-            for (int i = 0; i < 10; i++){
-                if (!SimplePhysics.CanPlaceItem(col)){
-                    x = UnityEngine.Random.Range(-1, 1);
-                    y = UnityEngine.Random.Range(-1, 1);
-                    g.transform.position = new Vector3(pos.x + x, pos.y + y, pos.z + 1);
-                }
-                else{
-                    g.SetActive(true);
-                    g.GetComponent<Item>().Amount = amount;
-                    return true;
-                }
-            }
-            Destroy(g);
+            name = "a";
+            pos =  new Vector3(0, 0, 0);
+            amount = 1f;
             return false;
+			//GameObject g;
+
+			//int x = UnityEngine.Random.Range (-1,1);
+			//int y = UnityEngine.Random.Range (-1,1);
+
+   //         //Try to instantiate the item at a random nearby position
+   //         try{
+   //             g = Instantiate(Resources.Load("Items/" + name, typeof(GameObject)),
+   //             new Vector3(pos.x + x, pos.y + y, pos.z + 1), Quaternion.identity) as GameObject;
+   //         }
+   //         catch (System.Exception){
+   //             Debug.Log("Invalid item! Every item must be placed on the SimpleCraft/Items/ folder!");
+   //             throw;
+   //         }
+   //         Collider col = g.GetComponent<Collider>();
+   //         for (int i = 0; i < 10; i++){
+   //             if (!SimplePhysics.CanPlaceItem(col)){
+   //                 x = UnityEngine.Random.Range(-1, 1);
+   //                 y = UnityEngine.Random.Range(-1, 1);
+   //                 g.transform.position = new Vector3(pos.x + x, pos.y + y, pos.z + 1);
+   //             }
+   //             else{
+   //                 g.SetActive(true);
+   //                 g.GetComponent<Item>().Amount = amount;
+   //                 return true;
+   //             }
+   //         }
+   //         Destroy(g);
+   //         return false;
         }
 
         public static int GetCraftableTypeLength(){

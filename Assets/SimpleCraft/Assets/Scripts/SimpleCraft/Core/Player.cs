@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 using SimpleCraft.UI;
+using UnityEngine.UI;
 
 namespace SimpleCraft.Core
 {
@@ -27,6 +28,9 @@ namespace SimpleCraft.Core
 		private Transform _raycaster;
 		[SerializeField]
 		private ToolHandler _toolHandler;
+		[SerializeField]
+		private Button bu;//re
+		public Button[] _bot;//re
 		public static bool __hit = false;
 		private LayerMask _focusLayers;
 		private LayerMask _craftLayers;
@@ -41,7 +45,10 @@ namespace SimpleCraft.Core
 		private Transform _cam;
 		private Vector3 _camf;
 		private GameObject _interactionObj;
-		private InventoryUI _inventoryUI;
+		public InventoryUI _inventoryUI;
+		[SerializeField]
+		public List<string> inventoy_obj;
+		public List<int> inventoy_count;
 
 		private Inventory _inventory;
 		public Inventory Inventory
@@ -59,6 +66,10 @@ namespace SimpleCraft.Core
 			get { return _quickMessage; }
 			set { _quickMessage = value; }
 		}
+		[SerializeField]
+		public GameObject wood;
+		public inventoy_list _inventoy_List;
+		public GameObject _hit;
 
 		/// <summary>
 		/// The type of the interaction if some object that the player
@@ -74,8 +85,9 @@ namespace SimpleCraft.Core
 		/// Check where the floor is on a navmesh to craft a item
 		/// </summary>
 		UnityEngine.AI.NavMeshHit _hitTerrain;
-		RaycastHit _hit;
+		//RaycastHit _hit;
 
+		
 		void Start()
 		{
 			_inventory = this.GetComponent<Inventory>();
@@ -104,10 +116,40 @@ namespace SimpleCraft.Core
 
 			_pauseMenu.SetActive(_showingMenu);
 		}
-
-		void Update()
+        
+        async void Update()
 		{
-			Debug.Log(_hit);
+			Ray ray = new Ray(transform.position, transform.forward * 10);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+				RaycastHit _hit;
+			    
+
+				//if(Physics.Raycast(ray,out _hit))
+    //            {
+				//	if(_hit.transform.gameObject.tag == "item")
+    //                {
+				//		Item item = _hit.transform.gameObject.GetComponent<Item>();
+				//		Debug.Log(item.ItemName);
+    //                }
+    //            }
+            }
+
+			if (Input.GetMouseButtonDown(0))
+			{
+				
+				if(_hit.transform.gameObject.tag == "Item")
+                {
+					_inventoy_List = new inventoy_list();
+					Item item = _hit.transform.gameObject.GetComponent<Item>();
+					Debug.Log(item.ItemName);
+					_inventoy_List.add_i(item.ItemName);
+				}
+
+			}
+			
+			//Debug.Log(_hit);
 			//インタラクション
 			//Debug.Log();
 			if (Input.GetKeyDown(KeyCode.Escape) && !_inventoryUI.IsActive())
@@ -145,7 +187,13 @@ namespace SimpleCraft.Core
 					_currItem = "";
 				}
 			}
-			Debug.Log(("_hit") + (__hit));
+			if (Input.GetKeyDown(KeyCode.Z))
+			{
+				_inventoryUI.Draw(_inventory);
+
+			}
+			
+          	//Debug.Log(("_hit") + (__hit));
 			//Debug.Log(_craftingMode);
 			if (_craftingMode)
 			{
@@ -164,25 +212,68 @@ namespace SimpleCraft.Core
 
 					//Debug.Log("1  " + (_hit.transform.gameObject.tag == "Resource") + (_hit.transform.gameObject.tag) + "2  " + (_interaction == Interaction.GrabTool));
 					//持つやtu
+					if(_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource")
+                    {
+						Debug.Log("b");
+						_inventoryUI.Draw(_inventory);
+						Debug.Log("a");
+						Resource resource_ = _hit.transform.gameObject.GetComponent<Resource>();
+						resource_.Item = GetComponent<Item>();
+						string _name = resource_.Item._itemName;
+						float amo = resource_.Amount;
+						Debug.Log("equ");
+						Equip(_name, amo);
+					
 
-					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource")
+					}
+
+					bool a = false;
+					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource" && a)
 					{
-						//Debug.Log("itme re");
+						inventoy_list instance = new inventoy_list();
+						instance.add_r(_hit.transform.gameObject);
+						Debug.Log("itme re");
 						Resource resource_ = _hit.transform.gameObject.GetComponent<Resource>();
 						Item item = _interactionObj.GetComponent<Item>();
 						__hit = true;
 						float amountTaken = _inventory.Add(resource_.name, resource_.Amount, this);
-						//Debug.Log(amountTaken);
+						Debug.Log(amountTaken);
 
 						if (amountTaken == item.Amount)
+						{
+							Debug.Log("equip_");
+							// Itemobjの取得方法を修正
+							Item Itemobj = resource_.Item;
+							if (Itemobj != null)
+							{
+								Equip(Itemobj._itemName, resource_.Amount);
+							}
 							Destroy(_interactionObj);
+						}
 						else
+						{
+							Debug.Log("equip");
 							item.Amount -= amountTaken;
-						resource_.Item = GetComponent<Item>();
-					    Item Itemobj = resource_.Item;
-						string itemname = Itemobj.ItemName;
-						Equip(itemname,resource_.Amount);
+							resource_.Item = GetComponent<Item>();
+							Debug.Log("1");
+							if (resource_.Item != null)
+							{
+								Item Itemobj = resource_.Item;
+								Debug.Log("2");
+								string itemname_ = Itemobj._itemName;
+								Debug.Log("eq" + Itemobj + ":" + resource_.Amount);
+								Equip(itemname_, resource_.Amount);
+							}
+							else
+							{
+								Debug.LogError("player.cs  " + "Failed to get Item component!");
+							}
+						}
+
 					}
+
+
+
 					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Tool")
 					{
 						Debug.Log("to");
@@ -198,9 +289,11 @@ namespace SimpleCraft.Core
 					{
 						Item item = _interactionObj.GetComponent<Item>();
 						float amountTaken = _inventory.Add(item.ItemName, item.Amount, this);
+						inventoy_list instance = new inventoy_list();
+						
 
-						if (amountTaken == item.Amount)
-							Destroy(_interactionObj);
+						if (amountTaken == item.Amount) { }
+							//Destroy(_interactionObj);
 						else
 							item.Amount -= amountTaken;
 					}
@@ -216,7 +309,7 @@ namespace SimpleCraft.Core
 					}
 				}
 
-				CheckPlayerFocus();
+				//CheckPlayerFocus();
 			}
 		}
 
@@ -250,6 +343,7 @@ namespace SimpleCraft.Core
 		}
 		public void Equip(string name_,float amount_)
 		{
+			Debug.Log("eq");
 			if (_currItem == "")
 				return;
 
@@ -269,129 +363,113 @@ namespace SimpleCraft.Core
 
 
 
-		public void Equip()
-		{
-			if (_currItem == "")
-				return;
-
-			GameObject tool = Manager.getItem(_currItem, 1);
-
-			if (tool.GetComponent<Item>().GetType() == typeof(Tool))
-			{
-				_toolHandler.ChangeTool(tool);
-			}
-			else
-			{
-				Destroy(tool);
-				_quickMessage.ShowMessage("Can't equip this item!");
-			}
-		}
+		
 
 		/// <summary>
 		/// Checks where the player camera is focusing and
 		/// display a message about it.
 		/// </summary>
-		void CheckPlayerFocus()
-		{
+		//void CheckPlayerFocus()
+		//{
 			
-			_camf = _cam.forward;
+		//	_camf = _cam.forward;
 
-			Debug.DrawRay(_cam.position, _camf, Color.red, 100);
-			//Debug.Log(UnityEngine.Physics.Raycast(_cam.position, _cam.forward, out _hit, 100, _focusLayers.value));
-			if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10))
-			{
-				//Debug.Log("hit check");
-				//Debug.Log(_hit.transform.gameObject.tag == "Tool");
-				Debug.DrawRay(_cam.position, _cam.forward,Color.red,5,true);
-				if (_hit.transform.gameObject.tag == "Item")
-				{
-					//Debug.Log("item");
-					Item item = _hit.transform.gameObject.GetComponent<Item>();
-					_actionText.Text = "Press (E) to grab " + item.ItemName + " x " + item.Amount;
-					_interaction = Interaction.GrabItem;
-					_interactionObj = _hit.transform.gameObject;
-				}
-				else if (_hit.transform.gameObject.tag == "Tool")
-				{
+		//	Debug.DrawRay(_cam.position, _camf, Color.red, 100);
+		//	//Debug.Log(UnityEngine.Physics.Raycast(_cam.position, _cam.forward, out _hit, 100, _focusLayers.value));
+		//	if (UnityEngine.Physics.Raycast(_cam.position, _camf, out _hit, 10))
+		//	{
+		//		//Debug.Log("hit check");
+		//		//Debug.Log(_hit.transform.gameObject.tag == "Tool");
+		//		Debug.DrawRay(_cam.position, _cam.forward,Color.red,5,true);
+		//		if (_hit.transform.gameObject.tag == "Item")
+		//		{
+		//			//Debug.Log("item");
+		//			Item item = _hit.transform.gameObject.GetComponent<Item>();
+		//			_actionText.Text = "Press (E) to grab " + item.ItemName + " x " + item.Amount;
+		//			_interaction = Interaction.GrabItem;
+		//			_interactionObj = _hit.transform.gameObject;
+		//		}
+		//		else if (_hit.transform.gameObject.tag == "Tool")
+		//		{
 					
-					_actionText.Text = "Press (E) to grab " + _hit.transform.gameObject.GetComponent<Tool>().ItemName;
-					_interaction = Interaction.GrabTool;
-					_interactionObj = _hit.transform.gameObject;
-				}
-				else if (_hit.transform.gameObject.tag == "Resource")
-				{
-					//Debug.Log("re");
-					Resource resource = _hit.transform.gameObject.GetComponent<Resource>();
-					_actionText.Text = "Resource: " + resource.Item.ItemName;
-					_interactionObj = _hit.transform.gameObject;
-					//Debug.Log("_ac ;  " +_actionText);
-					//Debug.Log("re  ;  " + resource);
-				}
-				else if (_hit.transform.gameObject.tag == "Container")
-				{
-					_actionText.Text = "Press (E) to open Container";
-					_interaction = Interaction.OpenContainer;
-					_interactionObj = _hit.transform.gameObject;
-				}
-				else if (_hit.transform.gameObject.tag == "Interactable")
-				{
-					_actionText.Text = _hit.transform.gameObject.name;
-					_interaction = Interaction.None;
-					_interactionObj = _hit.transform.gameObject;
-				}
-				else if (_hit.transform.gameObject.tag == "open")
-				{
-					_actionText.Text = "op";
-					_interactionObj = _hit.transform.gameObject;
-				}
-				else
-				{
-					_interactionObj = null;
-					_actionText.Text = "";
-				}
-			}
-			else
-			{
-				_interactionObj = null;
-				_actionText.Text = "";
-			}
+		//			_actionText.Text = "Press (E) to grab " + _hit.transform.gameObject.GetComponent<Tool>().ItemName;
+		//			_interaction = Interaction.GrabTool;
+		//			_interactionObj = _hit.transform.gameObject;
+		//		}
+		//		else if (_hit.transform.gameObject.tag == "Resource")
+		//		{
+		//			//Debug.Log("re");
+		//			Resource resource = _hit.transform.gameObject.GetComponent<Resource>();
+		//			_actionText.Text = "Resource: " + resource.Item.ItemName;
+		//			_interactionObj = _hit.transform.gameObject;
+		//			//Debug.Log("_ac ;  " +_actionText);
+		//			//Debug.Log("re  ;  " + resource);
+		//		}
+		//		else if (_hit.transform.gameObject.tag == "Container")
+		//		{
+		//			_actionText.Text = "Press (E) to open Container";
+		//			_interaction = Interaction.OpenContainer;
+		//			_interactionObj = _hit.transform.gameObject;
+		//		}
+		//		else if (_hit.transform.gameObject.tag == "Interactable")
+		//		{
+		//			_actionText.Text = _hit.transform.gameObject.name;
+		//			_interaction = Interaction.None;
+		//			_interactionObj = _hit.transform.gameObject;
+		//		}
+		//		else if (_hit.transform.gameObject.tag == "open")
+		//		{
+		//			_actionText.Text = "op";
+		//			_interactionObj = _hit.transform.gameObject;
+		//		}
+		//		else
+		//		{
+		//			_interactionObj = null;
+		//			_actionText.Text = "";
+		//		}
+		//	}
+		//	else
+		//	{
+		//		_interactionObj = null;
+		//		_actionText.Text = "";
+		//	}
 
-		}
-
+		//}
+		
 		void OnCraftingMode()
 		{
-			if (_currCraftItem == null)
-				return;
+			//if (_currCraftItem == null)
+			//	return;
 
-			//use a raycast from above the player
-			//using the offset distance forward to the player's position 
-			_raycaster.position = transform.position + transform.forward * _currCraftItem.Offset;
-			_raycaster.position = new Vector3(_raycaster.position.x, _raycaster.position.y + 5, _raycaster.position.z);
+			////use a raycast from above the player
+			////using the offset distance forward to the player's position 
+			//_raycaster.position = transform.position + transform.forward * _currCraftItem.Offset;
+			//_raycaster.position = new Vector3(_raycaster.position.x, _raycaster.position.y + 5, _raycaster.position.z);
 
-			//position the item to be crafted using a ray from the raycaster transform
-			if (UnityEngine.Physics.Raycast(_raycaster.position, _raycaster.forward, out _hit, 20, _craftLayers.value))
-			{
-				//keep the object away from the player by the offset distance
-				if (Vector3.Distance(_hit.point, this.gameObject.transform.position) >= _currCraftItem.Offset)
-				{
-					if (_currCraftItem.OnlyOnGround)
-					{
-						//position the item if the raycast hits a valid navmesh point
-						if (UnityEngine.AI.NavMesh.SamplePosition(_hit.point, out _hitTerrain, 100.0f, UnityEngine.AI.NavMesh.AllAreas))
-							_itemObj.transform.position = new Vector3(_hitTerrain.position.x, _hitTerrain.position.y, _hitTerrain.position.z);
-					}
-					else //poisiton the item at the raycast hit position
-						_itemObj.transform.position = new Vector3(_hit.point.x, _hit.point.y + 0.2f, _hit.point.z);
-				}
-			}
+			////position the item to be crafted using a ray from the raycaster transform
+			//if (UnityEngine.Physics.Raycast(_raycaster.position, _raycaster.forward, out _hit, 20, _craftLayers.value))
+			//{
+			//	//keep the object away from the player by the offset distance
+			//	if (Vector3.Distance(_hit.point, this.gameObject.transform.position) >= _currCraftItem.Offset)
+			//	{
+			//		if (_currCraftItem.OnlyOnGround)
+			//		{
+			//			//position the item if the raycast hits a valid navmesh point
+			//			if (UnityEngine.AI.NavMesh.SamplePosition(_hit.point, out _hitTerrain, 100.0f, UnityEngine.AI.NavMesh.AllAreas))
+			//				_itemObj.transform.position = new Vector3(_hitTerrain.position.x, _hitTerrain.position.y, _hitTerrain.position.z);
+			//		}
+			//		else //poisiton the item at the raycast hit position
+			//			_itemObj.transform.position = new Vector3(_hit.point.x, _hit.point.y + 0.2f, _hit.point.z);
+			//	}
+			//}
 
 
 			if (_currCraftItem != null)
 			{
 				//if it is a valid place
-				if (!_currCraftItem.CanBuild())
-					_actionText.Text = "Can't build there!";
-				else if (!HaveResources(_currCraftItem))
+				//if (!_currCraftItem.CanBuild())
+				//	_actionText.Text = "Can't build there!";
+		     	 if (!HaveResources(_currCraftItem))
 					_actionText.Text = "Lack of the required resources!";
 				else
 					_actionText.Text = "";
@@ -474,19 +552,19 @@ namespace SimpleCraft.Core
 			//try to place the item 
 			if (Input.GetKeyDown(KeyCode.E))
 			{
-				if (this.HaveResources(_currCraftItem) && _currCraftItem.CanBuild())
-				{
-					TakeResources(_currCraftItem);
-					GameObject g = Instantiate(_itemObj);
+				//if (this.HaveResources(_currCraftItem) && _currCraftItem.CanBuild())
+				//{
+				//	TakeResources(_currCraftItem);
+				//	GameObject g = Instantiate(_itemObj);
 
-					if (Manager.CheckObjective(_itemObj))
-						_quickMessage.ShowMessage("Objective Completed", 5);
+				//	if (Manager.CheckObjective(_itemObj))
+				//		_quickMessage.ShowMessage("Objective Completed", 5);
 
-					if (_currCraftItem.HasRigidBody && g.GetComponent<Rigidbody>() != null)
-						g.GetComponent<Rigidbody>().detectCollisions = true;
+				//	if (_currCraftItem.HasRigidBody && g.GetComponent<Rigidbody>() != null)
+				//		g.GetComponent<Rigidbody>().detectCollisions = true;
 
-					g.GetComponent<CraftableItem>().IsActive = true;
-				}
+				//	g.GetComponent<CraftableItem>().IsActive = true;
+				//}
 			}
 		}
 
