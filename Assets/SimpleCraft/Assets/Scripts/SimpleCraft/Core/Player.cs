@@ -119,7 +119,7 @@ namespace SimpleCraft.Core
         
         async void Update()
 		{
-			Ray ray = new Ray(transform.position, transform.forward * 10);
+			//Ray ray = new Ray(transform.position, transform.forward * 10);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
