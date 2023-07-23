@@ -56,6 +56,7 @@ public class InventoryList : MonoBehaviour
         {
             name.Add(Rdata.itemname);
             count.Add(Rdata.quantity);
+            obj.Add(Rdata.Itemobj);
         }
         else
         {
@@ -80,6 +81,7 @@ public class InventoryList : MonoBehaviour
         {
             name.Add(Tdata.name);
             count.Add(1);
+            obj.Add(Tdata.Toolobj);
         }
         else
         {
@@ -91,6 +93,33 @@ public class InventoryList : MonoBehaviour
 
         //Debug.Log(string.Join(",", name.Select(name => name.ToString())));
        // Debug.Log(string.Join(",", count.Select(count => count.ToString())));
+    }
+    public void CraftItem(string name_,int count_,GameObject obj_)
+    {
+        //bool bool1;
+        ////bool1 = name.Contains(Idata.name);
+        Debug.Log(obj);
+        var var1 = -100;
+        var1 = name.IndexOf(name_);
+        
+        // Debug.Log(var1);
+        if (var1 == -1)
+        {
+            name.Add(name_);
+            count.Add(count_);
+            obj.Add(obj_);
+        }
+        else
+        {
+            int i;
+            i = count[var1];
+            i = i + count_;
+            count[var1] = i;
+        }
+        Destroy(Ray_._hit);
+
+        // Debug.Log(string.Join(",", name.Select(name => name.ToString())));
+        // Debug.Log(string.Join(",", count.Select(count => count.ToString())));
     }
 
 }

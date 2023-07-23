@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8139318252947486562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.4822, z: -1.27}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141959048713264316}
@@ -77,6 +77,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: stone
+  _number: 0
+  _Itemobj: {fileID: 0}
+  _itemObjData: {fileID: 0}
 --- !u!1 &8140094941193094004
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +142,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6e77abafbc20a7f47af261ae36c18ce7, type: 2}
+  - {fileID: 2100000, guid: ad93a3920f2d1104c8ca76452bb014a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

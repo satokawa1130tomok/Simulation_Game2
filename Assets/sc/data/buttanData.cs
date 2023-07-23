@@ -6,24 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class buttanData : MonoBehaviour
 {
-    public string _name;
-    public string name
+    public int _number;
+    public int number
     {
-        get { return _name; }
-        set { _name = value; }
+        get { return _number; }
+        set { _number = value; }
     }
-    public int _count;
-    public int count
-    {
-        get { return _count; }
-        set { _count = value; }
-    }
-    public GameObject _obj;
-    public GameObject obj
-    {
-        get { return _obj; }
-        set { _obj = value; }
-    }
+    
 
     public GameObject thisButton;
     public static bool a;
@@ -63,8 +52,7 @@ public class buttanData : MonoBehaviour
     //}
     public void OnClick()
     {
-        Drop dor = DropButton.GetComponent<Drop>();
-        dor.obj = obj;
+        Drop.No = number;
     }
    
      

@@ -20,6 +20,9 @@ public class RecipieButton : MonoBehaviour
 
 
     public OnoData onodata;
+    public CraftTableData crafttabledata;
+
+
 
     public string _name;
     public string name_
@@ -113,98 +116,23 @@ public class RecipieButton : MonoBehaviour
                 name_ = onodata.RecipeName;
                 a_ = a;
                 break;
+
+            case 2:
+                text(crafttabledata.RecipeName, crafttabledata.Explanation);
+                ButtonText(crafttabledata.ItemName1, crafttabledata.ItemCount1, crafttabledata.ItemName2, crafttabledata.ItemCount2, "", 0, crafttabledata.ButtonCount);
+                active(crafttabledata.ButtonCount);
+                obj = crafttabledata.obj;
+                count__ = 1;
+                name_ = crafttabledata.RecipeName;
+                a_ = a;
+                break;
         }
     }
-    public void click()
-    {
-       
-        craft = true;
-        if (count == 1 && craft)
-        {
-            ItemCraft(name1, count1);
-            if (craft) { ItemRemove(name1, count1); }
-
-        }
-        else if (count == 2 && craft)
-        {
-            ItemCraft(name1, count1);
-            if (craft) { ItemCraft(name2, count2); }
-            
-            if (craft){ ItemRemove(name1, count1); ItemRemove(name2, count2); }
-        }
-
-        else if (count == 3 && craft)
-        {
-
-        }
-        else
-        {
-            craft = false;
-        }
-
-                if (craft)
-                {
-                    var var1 = name.IndexOf(name_);
-                    // Debug.Log(var1);
-                    if (var1 == -1)
-                    {
-                        inventoryList.name.Add(name_);
-                        inventoryList.count.Add(count_);
-                    }
-                    else
-                    {
-                        int i;
-                        i = inventoryList.count[var1];
-                        i = i + count_;
-                        inventoryList.count[var1] = i;
-                    }
-                    Onclick(a_);
-                }
-    }
-    public void ItemRemove(string name,int count)
-    {
-        int int1 = inventoryList.count[inventoryList.name.IndexOf(name)];
-        var var1 = inventoryList.name.IndexOf(name);
-        if (int1 == count)
-        {
-            inventoryList.name.Remove(name);
-
-            int a = var1;
-            inventoryList.count.RemoveAt(a);
-        }
-        else
-        {
-            inventoryList.count[var1] = inventoryList.count[var1] - count;
-        }
-    }
-        public void ItemCraft(string name, int count)
-        {
-            int int1;
-            if (inventoryList.name.IndexOf(name) != -1)
-            {
-
-                int1 = inventoryList.count[inventoryList.name.IndexOf(name)];
-                if (int1 >= count)
-                {
-                    return;
-                }
-                else
-                {
-                    errorMessage._ErrorMessage("don't have the Item");
-                    craft = false;
-                    return;
-                }
-            }
-            else
-            {
-                errorMessage._ErrorMessage("don't have the Item");
-                craft = false;
-                return;
-            }
-        }
+   
+    
         public void active(int count)
         {
-            Debug.Log(count);
+           // Debug.Log(count);
             if (panel.activeSelf == false) { panel.SetActive(true); }
             ItemButton1.SetActive(true);
             if (count == 1)

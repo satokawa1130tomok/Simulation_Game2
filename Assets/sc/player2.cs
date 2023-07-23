@@ -12,7 +12,7 @@ public class player2 : MonoBehaviour
     public float rotateSpeed = 1.0f;//視点移動速度
     public bool isGround;//地面
     public float upForce = 10f;//ジャンプ力
-    public GameObject inventoy;//インベントリ
+    public  GameObject inventoy;//インベントリ
     public IncentoryCreate _inventoryCreate;//クラス取得
     public static char HaveTool = 'N';//持っているツールの種類
     public static bool a;//inndenntorinoboolstatic

@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class Drop : MonoBehaviour
 {
-    public GameObject _obj;
-    public GameObject obj
-    {
-        get { return _obj; }
-        set { _obj = value;  }
-    }
+   
+    [SerializeField]
+    public static int No;
+    public InventoryList _inventoyList;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +23,13 @@ public class Drop : MonoBehaviour
     }
     public voidÅ@OnClick()
     {
-       
+        
+        GameObject cloneObj = _inventoyList.obj[No];
+        Debug.Log(No);
+        Debug.Log(cloneObj);
+        GameObject obj =Å@Instantiate(cloneObj, player.transform.position, Quaternion.identity);
+        Itemdata scle = obj.GetComponent<Itemdata>();
+        //obj.gameObject.transform.localScale = new Vector3(scle.scale, scle.scale, scle.scale);
     }
     
 }

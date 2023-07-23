@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RecipeName: CraftTabel
   ItemName1: branch
-  ItemCount1: 0
-  ItemName2: 
-  ItemCount2: 0
-  Explanation: 
-  HandCraft: 0
-  ButtonCount: 0
-  obj: {fileID: 0}
+  ItemCount1: 4
+  ItemName2: board
+  ItemCount2: 1
+  Explanation: "\u3044\u308D\u3044\u308D\u30AF\u30E9\u30D5\u30C8\u3067\u304D\u307E\u3059"
+  HandCraft: 1
+  ButtonCount: 2
+  obj: {fileID: 6928975325916272747, guid: b758a0e902e89344d875260e5d7bc3ca, type: 3}
