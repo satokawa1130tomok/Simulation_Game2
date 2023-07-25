@@ -22,13 +22,20 @@ public class ToolData : MonoBehaviour
         get { return _Toolobj; }
         set { _Toolobj = value; }
     }
+    public int _number;
+    public int number
+    {
+        get { return _number; }
+        set { _number = value; }
+    }
+    public ItemObjData itemdata;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _Toolobj = itemdata.obj[number];
     }
 
     // Update is called once per frame

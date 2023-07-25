@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class player2 : MonoBehaviour
 {
-    
+
     public GameObject player;//プレイヤー
     public Rigidbody rb;//プレイヤーの当たり判定
     public int speed;//移動速度
@@ -12,15 +12,16 @@ public class player2 : MonoBehaviour
     public float rotateSpeed = 1.0f;//視点移動速度
     public bool isGround;//地面
     public float upForce = 10f;//ジャンプ力
-    public  GameObject inventoy;//インベントリ
+    public GameObject inventoy;//インベントリ
+    public GameObject SecondInventoy;//チェストのinventory
     public IncentoryCreate _inventoryCreate;//クラス取得
     public static char HaveTool = 'N';//持っているツールの種類
     public static bool a;//inndenntorinoboolstatic
-    public buttanData _buttondata;
+   // public buttanData _buttondata;
 
     public GameObject Craft;
     public GameObject Recipe;
-   // Start is called before the first frame update
+    // Start is called before the first frame update
 
     //当たり判定
     private void OnCollisionEnter(Collision collision)
@@ -52,37 +53,38 @@ public class player2 : MonoBehaviour
 
         }
 
-        if (!inventoy.activeSelf) {  move();}
+        if (!inventoy.activeSelf) { move(); }
         inventoy_();
         _Craft();
-;    }
+        chest();
+        ; }
     public void move()
     {
 
-        if (Input.GetKey(KeyCode.W)&& !run) { transform.position += transform.right*speed * Time.deltaTime; }
+        if (Input.GetKey(KeyCode.W) && !run) { transform.position += transform.right * speed * Time.deltaTime; }
         if (Input.GetKey(KeyCode.S)) { transform.position -= transform.right * speed * Time.deltaTime; }
         if (Input.GetKey(KeyCode.A)) { transform.position += transform.forward * speed * Time.deltaTime; }
         if (Input.GetKey(KeyCode.D)) { transform.position -= transform.forward * speed * Time.deltaTime; }
-        if (run) { transform.position += transform.right * speed *2* Time.deltaTime; }
+        if (run) { transform.position += transform.right * speed * 2 * Time.deltaTime; }
 
 
-        
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && run_sli.run_value > 0f)
-            {
 
-                run = true;
-            }
-            else
-                run = false;
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && run_sli.run_value > 0f)
+        {
 
-       
+            run = true;
+        }
+        else
+            run = false;
+
+
         if (Input.GetKey(KeyCode.Space) && isGround)
         {
-               isGround = false;
-               rb.velocity = Vector3.up * upForce*10;
-                
+            isGround = false;
+            rb.velocity = Vector3.up * upForce * 10;
+
         }
-        
+
 
     }
     public void cameramove()
@@ -92,16 +94,16 @@ public class player2 : MonoBehaviour
     }
     public void inventoy_()
     {
-        if (Input.GetKeyDown(KeyCode.E)&&(!inventoy.activeSelf) && (!Craft.activeSelf))
+        if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (!Craft.activeSelf) && (ChestManager.SecondInventoy == false))
         {
-          
+
             inventoy.SetActive(true);
             Cursor.visible = true;
             CameraControll.active_camera = false;
-             _inventoryCreate.InventoryCreate();
+            _inventoryCreate.InventoryCreate();
             a = true;
         }
-        else if (Input.GetKeyDown(KeyCode.E) && (inventoy.activeSelf) && (!Craft.activeSelf))
+        else if (Input.GetKeyDown(KeyCode.E) && (inventoy.activeSelf) && (!Craft.activeSelf) && (ChestManager.SecondInventoy == false))
         {
 
             _inventoryCreate.DestroyButton();
@@ -112,7 +114,7 @@ public class player2 : MonoBehaviour
             inventoy.SetActive(false);
 
         }
-        else if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (Craft.activeSelf))
+        else if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (Craft.activeSelf) && (ChestManager.SecondInventoy == false))
         {
             Recipe.SetActive(false);
             Craft.SetActive(false);
@@ -122,28 +124,28 @@ public class player2 : MonoBehaviour
             _inventoryCreate.InventoryCreate();
             a = true;
         }
-       
+
 
 
     }
     public void _Craft()
     {
-        if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (!inventoy.activeSelf))
+        if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (!inventoy.activeSelf)&&(ChestManager.SecondInventoy ==false))
         {
             Craft.SetActive(true);
             Recipe.SetActive(false);
             Cursor.visible = true;
             CameraControll.active_camera = false;
         }
-        else if (Input.GetKeyDown(KeyCode.C) && (Craft.activeSelf) && (!inventoy.activeSelf))
+        else if (Input.GetKeyDown(KeyCode.C) && (Craft.activeSelf) && (!inventoy.activeSelf) && (ChestManager.SecondInventoy == false))
         {
-             Recipe.SetActive(false);
+            Recipe.SetActive(false);
             Craft.SetActive(false);
 
             Cursor.visible = false;
             CameraControll.active_camera = true;
         }
-         else if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (inventoy.activeSelf))
+        else if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (inventoy.activeSelf) && (ChestManager.SecondInventoy == false))
         {
             Craft.SetActive(true);
             Recipe.SetActive(false);
@@ -154,7 +156,25 @@ public class player2 : MonoBehaviour
             // _inventoryCreate.DestroyButton();
             inventoy.SetActive(false);
         }
-       
+
+
+
+    }
+    public void chest()
+    {
+        if ((Craft.activeSelf) && (inventoy.activeSelf))
+        {
+            return;
+        }
+        else if(ChestManager.SecondInventoy == true)
+        {
+            SecondInventoy.SetActive(true);
+        }
+        else if((ChestManager.SecondInventoy == true) && (Input.GetKeyDown(KeyCode.Escape))||(Input.GetKeyDown(KeyCode.E)))
+        {
+            SecondInventoy.SetActive(false);
+            ChestManager.SecondInventoy = false;
+        }
     }
     
 

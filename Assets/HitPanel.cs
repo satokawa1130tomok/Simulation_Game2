@@ -71,6 +71,20 @@ public class HitPanel : MonoBehaviour
                 }
 
 
+
+            }
+            else if(Ray_.a == 4)//tag == chest‚ÌŽž
+            {
+                Panel.SetActive(true);
+                chestdata cdata = Ray_._hit.gameObject.GetComponent<chestdata>();
+                text.text = cdata.name;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    ChestManager.Chset();
+                   //chestƒŠƒXƒg‚ð•\Ž¦
+                    Ray_.a = 0;
+                    Ray_._hit = null;
+                }
             }
             else if (Ray_.a == 0)//Ray_._hit == null ‚ÌŽž
             {

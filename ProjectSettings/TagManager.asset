@@ -13,6 +13,7 @@ TagManager:
   - Terrain
   - Ground
   - open
+  - chest
   layers:
   - Default
   - TransparentFX

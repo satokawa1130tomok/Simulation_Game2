@@ -15,6 +15,6 @@ MonoBehaviour:
   obj:
   - {fileID: 1976630117060356030, guid: 9148a7f7e6288244f94591f67682a1d3, type: 3}
   - {fileID: 8139318252947486562, guid: 3be64cd2848d0cd47b479edec7bf971a, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3093018743727321424, guid: 7411f1cb113f0994b8d5a6312a36a0dc, type: 3}
+  - {fileID: 4984923575331723827, guid: 99524a290c951df44836807cf6da752b, type: 3}
   - {fileID: 0}

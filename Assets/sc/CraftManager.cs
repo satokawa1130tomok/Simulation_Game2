@@ -115,8 +115,10 @@ public class CraftManager : MonoBehaviour
         var var_ = recipie.inventoryList.count[recipie.inventoryList.name.IndexOf(name)] ;
         if (var_ == count)
         {
-            recipie.inventoryList.name.RemoveAt(recipie.inventoryList.name.IndexOf(name));
-            recipie.inventoryList.count.RemoveAt(recipie.inventoryList.name.IndexOf(name));
+           int a= recipie.inventoryList.name.IndexOf(name);
+            recipie.inventoryList.name.RemoveAt(a);
+            recipie.inventoryList.count.RemoveAt(a);
+            recipie.inventoryList.obj.RemoveAt(a);
         }
         else
         {

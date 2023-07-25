@@ -50,6 +50,10 @@ public class Ray_ : MonoBehaviour
             {
                 a = 3;
             }
+            if(_hit.gameObject.tag == "chest")
+            {
+                a = 4;
+            }
 
 
 
