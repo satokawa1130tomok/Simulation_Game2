@@ -17,6 +17,7 @@ public class player2 : MonoBehaviour
     public IncentoryCreate _inventoryCreate;//クラス取得
     public static char HaveTool = 'N';//持っているツールの種類
     public static bool a;//inndenntorinoboolstatic
+    public ChestManager _chestManager;
    // public buttanData _buttondata;
 
     public GameObject Craft;
@@ -45,7 +46,7 @@ public class player2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            _inventoryCreate.InventoryCreate();
+            inventoy.SetActive(true);
         }
         if (CameraControll.active_camera == true)
         {
@@ -94,28 +95,32 @@ public class player2 : MonoBehaviour
     }
     public void inventoy_()
     {
-        if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (!Craft.activeSelf) && (ChestManager.SecondInventoy == false))
+        if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (!Craft.activeSelf) )
         {
-
+            bool a = false;
+            _chestManager.Chset(a);
+            Debug.Log("a");
             inventoy.SetActive(true);
             Cursor.visible = true;
             CameraControll.active_camera = false;
             _inventoryCreate.InventoryCreate();
             a = true;
         }
-        else if (Input.GetKeyDown(KeyCode.E) && (inventoy.activeSelf) && (!Craft.activeSelf) && (ChestManager.SecondInventoy == false))
+        else if (Input.GetKeyDown(KeyCode.E) && (inventoy.activeSelf) && (!Craft.activeSelf))
         {
-
+            bool a = false;
+            _chestManager.Chset(a);
             _inventoryCreate.DestroyButton();
 
             Cursor.visible = false;
             CameraControll.active_camera = true;
-            // _inventoryCreate.DestroyButton();
+             _inventoryCreate.DestroyButton();
             inventoy.SetActive(false);
-
         }
-        else if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (Craft.activeSelf) && (ChestManager.SecondInventoy == false))
+        else if (Input.GetKeyDown(KeyCode.E) && (!inventoy.activeSelf) && (Craft.activeSelf))
         {
+            bool a = false;
+            _chestManager.Chset(a);
             Recipe.SetActive(false);
             Craft.SetActive(false);
             inventoy.SetActive(true);
@@ -130,14 +135,14 @@ public class player2 : MonoBehaviour
     }
     public void _Craft()
     {
-        if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (!inventoy.activeSelf)&&(ChestManager.SecondInventoy ==false))
+        if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (!inventoy.activeSelf))
         {
             Craft.SetActive(true);
             Recipe.SetActive(false);
             Cursor.visible = true;
             CameraControll.active_camera = false;
         }
-        else if (Input.GetKeyDown(KeyCode.C) && (Craft.activeSelf) && (!inventoy.activeSelf) && (ChestManager.SecondInventoy == false))
+        else if (Input.GetKeyDown(KeyCode.C) && (Craft.activeSelf) && (!inventoy.activeSelf) )
         {
             Recipe.SetActive(false);
             Craft.SetActive(false);
@@ -145,7 +150,7 @@ public class player2 : MonoBehaviour
             Cursor.visible = false;
             CameraControll.active_camera = true;
         }
-        else if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (inventoy.activeSelf) && (ChestManager.SecondInventoy == false))
+        else if (Input.GetKeyDown(KeyCode.C) && (!Craft.activeSelf) && (inventoy.activeSelf))
         {
             Craft.SetActive(true);
             Recipe.SetActive(false);
@@ -162,20 +167,12 @@ public class player2 : MonoBehaviour
     }
     public void chest()
     {
-        if ((Craft.activeSelf) && (inventoy.activeSelf))
-        {
-            return;
-        }
-        else if(ChestManager.SecondInventoy == true)
-        {
-            SecondInventoy.SetActive(true);
-        }
-        else if((ChestManager.SecondInventoy == true) && (Input.GetKeyDown(KeyCode.Escape))||(Input.GetKeyDown(KeyCode.E)))
-        {
-            SecondInventoy.SetActive(false);
-            ChestManager.SecondInventoy = false;
-        }
+       
+
     }
+        
+
+    
     
 
 }

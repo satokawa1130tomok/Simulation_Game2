@@ -12,6 +12,7 @@ public class HitPanel : MonoBehaviour
     public HaveTool _HaveTool;
     public ErrorMessage _ErrorMessage;
     public player2 player2_;
+    public ChestManager _chestManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class HitPanel : MonoBehaviour
     {
        // Debug.Log(Ray_.a);
        // Debug.Log(Ray_._hit);
-        if (player2_.inventoy.activeSelf == false) {
+        if (player2_.inventoy.activeSelf == false && (Ray_._hit != null)) {
             if (Ray_.a == 1)//tag == item の時
             {
                 Panel.SetActive(true);
@@ -33,7 +34,9 @@ public class HitPanel : MonoBehaviour
                 {
                     _InventoryList.ItemList(Ray_._hit, Idata);//インベントリに追加
                     Ray_.a = 0;
-                    Ray_._hit = null;
+                    
+                    Destroy(Ray_._hit);
+                    return;
                 }
             }
             else if (Ray_.a == 2)//tga == resource　の時
@@ -80,7 +83,8 @@ public class HitPanel : MonoBehaviour
                 text.text = cdata.name;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    ChestManager.Chset();
+                    bool a = true;
+                    _chestManager.Chset(a);
                    //chestリストを表示
                     Ray_.a = 0;
                     Ray_._hit = null;

@@ -1369,6 +1369,9 @@ MonoBehaviour:
   but: []
   Clone: {fileID: 2051048977}
   content: {fileID: 1520515587}
+  SecoundInventoy: {fileID: 915808275}
+  _player2: {fileID: 1881397208}
+  _inventoryCrate: {fileID: 1881397193}
 --- !u!1 &1099997524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,6 +2155,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 23687101858770939, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 23945797966881871, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_IsActive
@@ -2161,6 +2169,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 127274166884709285, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 127274166884709285, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1027591795}
+    - target: {fileID: 127274166884709285, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RemoveButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 127274166884709285, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ChestManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 127417707674243517, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2195,7 +2223,7 @@ PrefabInstance:
     - target: {fileID: 237697455433847497, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0019360549
+      value: 0.000063734355
       objectReference: {fileID: 0}
     - target: {fileID: 237736763373870029, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2345,7 +2373,7 @@ PrefabInstance:
     - target: {fileID: 238669421537528983, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0019360549
+      value: 0.000063734355
       objectReference: {fileID: 0}
     - target: {fileID: 1793529206816462845, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2386,6 +2414,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 22.200012
+      objectReference: {fileID: 0}
+    - target: {fileID: 1977637403107562912, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6727308353879968660, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2499,6 +2532,11 @@ PrefabInstance:
       objectReference: {fileID: 1490932381}
     - target: {fileID: 6727308353879968667, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
+      propertyPath: _chestManager
+      value: 
+      objectReference: {fileID: 1027591795}
+    - target: {fileID: 6727308353879968667, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
       propertyPath: _InventoryList
       value: 
       objectReference: {fileID: 1881397192}
@@ -2512,6 +2550,11 @@ PrefabInstance:
       propertyPath: Recipe
       value: 
       objectReference: {fileID: 795914607}
+    - target: {fileID: 6727308354703441639, guid: a8d7ea85751114f49b64853a10007424,
+        type: 3}
+      propertyPath: _chestManager
+      value: 
+      objectReference: {fileID: 1027591795}
     - target: {fileID: 6727308354703441639, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: SecondInventoy
@@ -2545,37 +2588,37 @@ PrefabInstance:
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 381.78592
+      value: 381.40253
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000022888184
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 71.47112
+      value: 70.65564
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9999942
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.0034005172
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2585,7 +2628,7 @@ PrefabInstance:
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 7628269292905164077, guid: a8d7ea85751114f49b64853a10007424,
         type: 3}
@@ -2786,7 +2829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8dece2b192b0d49b14d32a3525a73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoyList: {fileID: 1881397192}
   player: {fileID: 986026849}
 --- !u!114 &2051048977 stripped
 MonoBehaviour:

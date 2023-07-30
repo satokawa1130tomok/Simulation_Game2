@@ -8,7 +8,9 @@ public class Drop : MonoBehaviour
    
     [SerializeField]
     public static int No;
-    public InventoryList _inventoyList;
+    public static string name;
+    
+    public static InventoryList _inventoyList;
     public GameObject player;
     // Start is called before the first frame update
     void Start()

@@ -41,7 +41,6 @@ public class IncentoryCreate : MonoBehaviour
     public void InventoryCreate() //É{É^ÉìÇê∂ê¨
     {
 
-        but.Clear();
         // Debug.Log(string.Join(",", but.Select(but => but.ToString())));
 
 
@@ -68,32 +67,45 @@ public class IncentoryCreate : MonoBehaviour
 
 
         //    }
-
+        but.Clear();
         int i = 0;
 
         int C = _InventoryList.name.Count();
 
-        for (i = 0; i <= C+1; i++)      
-        {
-            string a = _InventoryList.name[i];
-            Button cloneButton = Instantiate(CloneButton_) as Button;
-            cloneButton.transform.SetParent(content.transform, false);
-            cloneButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -(i + 1) * 30);
+        
+            if (_InventoryList.name.Count() != 100)
+            {
+                for (i = 0; i < C + 1; i++)
+                {
+                   // Debug.Log(i);
+                    string a = _InventoryList.name[i];
+                    Button cloneButton = Instantiate(CloneButton_) as Button;
+                    cloneButton.transform.SetParent(content.transform, false);
+                    cloneButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -(i + 1) * 30);
 
-            GameObject textObj = cloneButton.transform.Find("clonetext").gameObject;
-            Text _text = textObj.GetComponent<Text>();
+                    GameObject textObj = cloneButton.transform.Find("clonetext").gameObject;
+                    Text _text = textObj.GetComponent<Text>();
+                 
+                 
+                    int b = _InventoryList.count[i];
+                    _text.text = a + " Å~" + b;
 
-            int b = _InventoryList.count[i];
-            _text.text = a + " Å~" + b;
+                    but.Add(cloneButton);
 
-            but.Add(cloneButton);
+                    buttanData data = cloneButton.GetComponent<buttanData>();
+                    data.number = i;
+                    data.name = a;
+                    
+                    // data.obj = _InventoryList.obj[i];
+                    // Debug.Log(i + "  " + C);
+                  
 
-            buttanData data = cloneButton.GetComponent<buttanData>();
-            data.number = i;
-           // data.obj = _InventoryList.obj[i];
-           // Debug.Log(i + "  " + C);
-            
-        }
+                }
+
+            }
+        
+       
+
 
     }
     public void DestroyButton()

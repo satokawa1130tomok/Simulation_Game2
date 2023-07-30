@@ -11,7 +11,7 @@ public class InventoryList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -39,7 +39,7 @@ public class InventoryList : MonoBehaviour
             i = i + 1;
             count[var1] = i;
         }
-        Destroy(Ray_._hit);
+        
 
        // Debug.Log(string.Join(",", name.Select(name => name.ToString())));
        // Debug.Log(string.Join(",", count.Select(count => count.ToString())));

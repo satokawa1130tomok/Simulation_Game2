@@ -12,21 +12,76 @@ public class ChestManager : MonoBehaviour
 
     public Button Clone;
     public GameObject content;
-    public static bool SecondInventoy;
+
+    public GameObject SecoundInventoy;
+    public player2 _player2;
+    public IncentoryCreate _inventoryCrate;
     // Start is called before the first frame update
     void Start()
     {
         ListName.Clear();
         ListCount.Clear();
         ListObj.Clear();
-        SecondInventoy = false;
     }
 
     // Update is called once per frame
-    
-    public static void Chset()
+    void Update()
     {
-        SecondInventoy = true;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (SecoundInventoy.activeSelf == true)
+            {
+                bool a = false;
+                Chset(a);
+            }
+        }
+    }
+
+    public void Chset(bool check)
+    {
+        SecoundInventoy.SetActive(check);
+        _player2.inventoy.SetActive(check);
+        Cursor.visible = check;
+        if (check)
+        {
+            _player2._inventoryCreate.InventoryCreate();
+            //ListCerate();
+           
+        }
+        else
+        {
+            _player2._inventoryCreate.DestroyButton();
+           // DestroyButton();
+        }
+        
+
+
+    }
+
+    public void RemoveButton()
+    {
+        var var1 = -100;
+        var1 = name.IndexOf(Drop.name);
+        Debug.Log(var1 + Drop.name);
+        
+        if (var1 == -1)
+        {
+            ListName.Add(Drop.name);
+            ListCount.Add(1);
+            ListObj.Add(Drop._inventoyList.obj[Drop.No]);
+        }
+        else
+        {
+            int i;
+            i = ListCount[var1];
+            i = i + 1;
+            ListCount[var1] = i;
+        }
+        //ListCerate();
+    }
+    public void AddButton()
+    {
+        
     }
     public void ListCerate()
     {

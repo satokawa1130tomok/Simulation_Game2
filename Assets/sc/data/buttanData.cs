@@ -12,6 +12,12 @@ public class buttanData : MonoBehaviour
         get { return _number; }
         set { _number = value; }
     }
+    public string _name;
+    public string name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
     
 
     public GameObject thisButton;
