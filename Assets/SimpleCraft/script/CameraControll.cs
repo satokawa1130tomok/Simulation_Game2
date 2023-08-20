@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraControll : MonoBehaviour
 {
 
+
+    public GameObject CameraObject;
     public GameObject mainCamera;              //ƒƒCƒ“ƒJƒƒ‰Ši”[—p
     public GameObject playerObject;            //‰ñ“]‚Ì’†S‚Æ‚È‚éƒvƒŒƒCƒ„[Ši”[—p
     public float rotateSpeed = 2.0f;            //‰ñ“]‚Ì‘¬‚³
@@ -48,11 +50,21 @@ public class CameraControll : MonoBehaviour
         // mainCamera.transform.RotateAround(playerObject.transform.position, Vector3.forward, angle.y);
         Transform myTransform = mainCamera.transform;
         Vector3 worldAngle = myTransform.eulerAngles;
-        float MouseY = Input.GetAxis("Mouse Y") * rotateSpeed*-1;
+        float MouseY = Input.GetAxis("Mouse Y") * rotateSpeed * -1;
         worldAngle.x += MouseY;
         myTransform.eulerAngles = worldAngle;
+        //if ()
+        //{
+        Vector3 localPos = myTransform.localPosition;
+       // localPos.x = MouseY ;
+        myTransform.localPosition = localPos;
+        //}
 
-    }
+
+
+
+        }
+    
     private void Max()
     {
         

@@ -99,7 +99,7 @@ public class player2 : MonoBehaviour
         {
             bool a = false;
             _chestManager.Chset(a);
-            Debug.Log("a");
+          //  Debug.Log("a");
             inventoy.SetActive(true);
             Cursor.visible = true;
             CameraControll.active_camera = false;

@@ -70,10 +70,11 @@ public class IncentoryCreate : MonoBehaviour
         but.Clear();
         int i = 0;
 
-        int C = _InventoryList.name.Count();
+        int C = _InventoryList.name.Count;
+        C = C - 1;
 
         
-            if (_InventoryList.name.Count() != 100)
+            if (_InventoryList.name.Count != 100)
             {
                 for (i = 0; i < C + 1; i++)
                 {

@@ -59,6 +59,7 @@ public class buttanData : MonoBehaviour
     public void OnClick()
     {
         Drop.No = number;
+        Drop.name = name;
     }
    
      

@@ -16,6 +16,7 @@ public class ChestManager : MonoBehaviour
     public GameObject SecoundInventoy;
     public player2 _player2;
     public IncentoryCreate _inventoryCrate;
+    public InventoryList _inventoryList;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,15 +61,18 @@ public class ChestManager : MonoBehaviour
 
     public void RemoveButton()
     {
+        //Debug.Log("a");
+        //Debug.Log(Drop.No);
+        //Debug.Log(_inventoryList.name[Drop.No]);
         var var1 = -100;
-        var1 = name.IndexOf(Drop.name);
-        Debug.Log(var1 + Drop.name);
+        var1 = ListName.IndexOf(_inventoryList.name[Drop.No]);
+       // Debug.Log(var1);
         
         if (var1 == -1)
         {
-            ListName.Add(Drop.name);
+            ListName.Add(_inventoryList.name[Drop.No]);
             ListCount.Add(1);
-            ListObj.Add(Drop._inventoyList.obj[Drop.No]);
+            ListObj.Add(_inventoryList.obj[Drop.No]);
         }
         else
         {
@@ -77,14 +81,40 @@ public class ChestManager : MonoBehaviour
             i = i + 1;
             ListCount[var1] = i;
         }
-        //ListCerate();
+        ListCerate();
+        InventoryRemove();
+        //_inventoryCrate.InventoryCreate();
     }
     public void AddButton()
     {
-        
+        var var1 = -100;
+        var1 = _inventoryList.name.IndexOf(ListName[Drop.No]);
+        // Debug.Log(var1);
+
+        if (var1 == -1)
+        {
+            _inventoryList.name.Add(ListName[Drop.No]);
+            _inventoryList.count.Add(1);
+            _inventoryList.obj.Add(ListObj[Drop.No]);
+        }
+        else
+        {
+            int i;
+            i = _inventoryList.count[var1];
+            i = i + 1;
+            _inventoryList.count[var1] = i;
+        }
+        _inventoryCrate.InventoryCreate();
+        chestRemove();
+
     }
     public void ListCerate()
     {
+        if(ListName.Count != 0)
+        {
+            DestroyButton();
+        }
+
         but.Clear();
         // Debug.Log(string.Join(",", but.Select(but => but.ToString())));
 
@@ -116,9 +146,12 @@ public class ChestManager : MonoBehaviour
         int i = 0;
 
         int C = ListName.Count;
-
-        for (i = 0; i <= C + 1; i++)
+        C = C - 1;
+        //Debug.Log(ListName.Count);
+        //Debug.Log(C);
+        for (i = 0; i < C + 1; i++)
         {
+            //Debug.Log("b");
             string a = ListName[i];
             Button cloneButton = Instantiate(Clone) as Button;
             cloneButton.transform.SetParent(content.transform, false);
@@ -149,4 +182,39 @@ public class ChestManager : MonoBehaviour
         }
         //   Debug.Log("2  "+(string.Join(",", but.Select(but => but.ToString()))));
     }   //but = new List&It;string&gt();
+    public void InventoryRemove()
+    {
+        //Debug.Log("a");
+         int count =_inventoryList.count[Drop.No];
+        if(count == 1)
+        {
+            _inventoryList.name.RemoveAt(Drop.No);
+            _inventoryList.count.RemoveAt(Drop.No);
+            _inventoryList.obj.RemoveAt(Drop.No);
+        }
+        else
+        {
+            _inventoryList.count[Drop.No] = count-1;
+        }
+        _inventoryCrate.DestroyButton();
+        _inventoryCrate.InventoryCreate();
+    }
+    public void chestRemove()
+    {
+        Debug.Log("a");
+        int count = ListCount[Drop.No];
+        if (count == 1)
+        {
+            ListName.RemoveAt(Drop.No);
+            ListCount.RemoveAt(Drop.No);
+            ListObj.RemoveAt(Drop.No);
+        }
+        else
+        {
+            ListCount[Drop.No] = count - 1;
+        }
+        DestroyButton();
+        ListCerate();
+
+    }
 }
