@@ -30,6 +30,11 @@ namespace SimpleCraft.UI{
 		public  Button[]  _but;
        
 		Button[] _secondBut;
+<<<<<<< Updated upstream
+=======
+		string but_ = ("_");
+
+>>>>>>> Stashed changes
 		void Start(){
 			_player = this.GetComponent<Player> ();
 			_invScrollView.SetActive (false);
@@ -112,6 +117,7 @@ namespace SimpleCraft.UI{
         //		DestroyButtons(itemButtons);
         //		itemButtons = new Button[playerInventory.Items.Count];
 
+<<<<<<< Updated upstream
         //		int i = 0;
         //		foreach (string itemName in playerInventory.Items.Keys)
         //		{
@@ -119,6 +125,16 @@ namespace SimpleCraft.UI{
         //			itemButtons[i].image.rectTransform.sizeDelta = new Vector2(160, 30);
         //			itemButtons[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (-(i + 1) * 30));
         //			itemButtons[i].transform.localScale = new Vector3(1, 1, 1);
+=======
+			Cursor.visible = true;//カーソルを表示
+			Time.timeScale = 0;//時間を止める
+			DestroyButtons (but);//ボタンをリセット
+			but = new Button[inventory.Items.Count];//アイテムの数配列を作る
+			int i = 0;//配列の変数
+		
+			foreach (string name in inventory.Items.Keys) {//配列の数繰り返す
+				but[i] = Instantiate (inventoryButton) as Button;//クローンを作る。ボタンにする
+>>>>>>> Stashed changes
 
         //			itemButtons[i].GetComponentInChildren<Text>().text = itemName;
 
@@ -140,6 +156,7 @@ namespace SimpleCraft.UI{
         //		inventoryOpenButton.gameObject.SetActive(false);
         //	}
 
+<<<<<<< Updated upstream
         void DrawInventoryItem(GameObject inventoryScrollView,
 
             Button inventoryButton,//インベントリを開くためのボタンオブジェクト
@@ -199,6 +216,21 @@ namespace SimpleCraft.UI{
 
         }
 
+=======
+				i++;
+
+		
+
+			}
+
+            Content.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, (inventory.Items.Count+1)*30);
+			inventoryButton.gameObject.SetActive(false);
+		}
+        private void Update()
+        { 
+           
+        }
+>>>>>>> Stashed changes
         /// <summary>
         /// Show/hide imvemtory
         /// </summary>

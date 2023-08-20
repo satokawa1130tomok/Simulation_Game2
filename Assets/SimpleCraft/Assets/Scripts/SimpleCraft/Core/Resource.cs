@@ -9,7 +9,11 @@ namespace SimpleCraft.Core{
 	/// </summary>
 	public class Resource : MonoBehaviour {
 
+<<<<<<< Updated upstream
 		[SerializeField] public GameObject _item;
+=======
+		[SerializeField] private GameObject _item;
+>>>>>>> Stashed changes
 
 		private Item _ItemScript { get; set; }
 		public Item Item {
@@ -24,6 +28,11 @@ namespace SimpleCraft.Core{
 			set { _amount = value; }
 		}
 	
+	    
+		
+
+
+
 	    
 		
 

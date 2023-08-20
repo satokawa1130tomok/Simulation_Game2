@@ -68,8 +68,11 @@ namespace SimpleCraft.Core
 		}
 		[SerializeField]
 		public GameObject wood;
+<<<<<<< Updated upstream
 		public inventoy_list _inventoy_List;
 		public GameObject _hit;
+=======
+>>>>>>> Stashed changes
 
 		/// <summary>
 		/// The type of the interaction if some object that the player
@@ -119,6 +122,7 @@ namespace SimpleCraft.Core
         
         async void Update()
 		{
+<<<<<<< Updated upstream
 			//Ray ray = new Ray(transform.position, transform.forward * 10);
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -150,6 +154,10 @@ namespace SimpleCraft.Core
 			}
 			
 			//Debug.Log(_hit);
+=======
+			
+			Debug.Log(_hit);
+>>>>>>> Stashed changes
 			//インタラクション
 			//Debug.Log();
 			if (Input.GetKeyDown(KeyCode.Escape) && !_inventoryUI.IsActive())
@@ -212,6 +220,7 @@ namespace SimpleCraft.Core
 
 					//Debug.Log("1  " + (_hit.transform.gameObject.tag == "Resource") + (_hit.transform.gameObject.tag) + "2  " + (_interaction == Interaction.GrabTool));
 					//持つやtu
+<<<<<<< Updated upstream
 					if(_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource")
                     {
 						Debug.Log("b");
@@ -232,6 +241,11 @@ namespace SimpleCraft.Core
 					{
 						inventoy_list instance = new inventoy_list();
 						instance.add_r(_hit.transform.gameObject);
+=======
+					bool a = false;
+					if (_interaction == Interaction.GrabTool && _hit.transform.gameObject.tag == "Resource" && a)
+					{
+>>>>>>> Stashed changes
 						Debug.Log("itme re");
 						Resource resource_ = _hit.transform.gameObject.GetComponent<Resource>();
 						Item item = _interactionObj.GetComponent<Item>();
